@@ -1,0 +1,64 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/productsToolbar"
+        android:background="#fff"
+        android:elevation="4dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:contentInsetStart="4dp">
+
+        <ImageView
+            android:id="@+id/closeBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="0dp"
+            android:padding="12dp"
+            android:src="@drawable/ic_back_outline_28"
+            android:tint="#3F8AE0" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            app:autoSizeMaxTextSize="20sp"
+            app:autoSizeStepGranularity="2sp"
+            app:autoSizeMinTextSize="12sp"
+            app:autoSizeTextType="uniform"
+            android:id="@+id/productsTitle"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:gravity="center_vertical"
+            android:fontFamily="@font/roboto_medium"
+            android:paddingLeft="12dp"
+            android:paddingRight="16dp"
+            android:text="@string/products_title"
+            android:textColor="@android:color/black"
+            android:textSize="20sp" />
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/productsRecycler"
+        android:layout_marginTop="4dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:background="#fff"
+        tools:itemCount="14" />
+
+    <TextView
+        android:id="@+id/noProducts"
+        android:text="@string/no_products"
+        android:fontFamily="@font/roboto_regular"
+        android:textSize="20sp"
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:textColor="@android:color/black"
+        android:layout_height="match_parent" />
+
+</LinearLayout>
