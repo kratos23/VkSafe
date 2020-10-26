@@ -2,60 +2,69 @@ package com.pavelkrylov.vsafe.feautures.stores
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.pavelkrylov.vsafe.base.VkRequestThread
+import com.pavelkrylov.vsafe.base.MyRequest
+import com.pavelkrylov.vsafe.base.RequestThread
+import com.pavelkrylov.vsafe.logic.network.OkHttp
 import com.squareup.picasso.Picasso
-import com.vk.api.sdk.requests.VKRequest
+import okhttp3.HttpUrl.Companion.toHttpUrl
+import okhttp3.Request
 import org.json.JSONObject
+import java.lang.Thread.sleep
 
 class StoresInteractor {
-
-    companion object {
-        const val STORES_LEN = 1000
-        const val PAGE_LEN = 20
-    }
-
     private var loading = false
     private var page = 0
-    private var cityId = 0L
+    private var q = ""
     private var loadThread: Thread? = null
 
     val endLd = MutableLiveData<Boolean>(false)
 
     fun loadMoreStores(): LiveData<List<UIStore>>? {
+        println("loading $loading")
         if (loading) {
             return null
         }
         val result = MutableLiveData<List<UIStore>>()
-        result.observeForever {
+        result.observeForever { list ->
             loading = false
+            if (list.isEmpty()) {
+                endLd.value = true
+            }
         }
-        loadThread = VkRequestThread(StoresRequest(page, cityId), result).apply {
+        loading = true
+        loadThread = RequestThread(StoresRequest2(page, q), result).apply {
             start()
         }
         page++
-        if (page == STORES_LEN / PAGE_LEN) {
-            endLd.value = true
-        }
-        loading = true
         return result
     }
 
-    fun updateCity(cityId: Long) {
-        this.cityId = cityId
+    fun updateQuery(q: String) {
+        this.q = q
         loadThread?.interrupt()
+        loading = false
         loadThread = null
         endLd.value = false
         page = 0
     }
 
-    class StoresRequest(val page: Int, val cityId: Long) :
-        VKRequest<List<UIStore>>("execute.storesList") {
-        init {
-            addParam("page", page)
-            addParam("city", cityId)
-        }
-
-        override fun parse(r: JSONObject): List<UIStore> {
+    class StoresRequest2(val page: Int, val q: String) : MyRequest<List<UIStore>> {
+        override fun run(): List<UIStore> {
+            sleep(300) // debounce
+            val client = OkHttp.client
+            val request = Request.Builder()
+                .url(
+                    OkHttp.MARKETS_URL.toHttpUrl()
+                        .newBuilder()
+                        .addQueryParameter("page", page.toString())
+                        .addQueryParameter("q", q)
+                        .build()
+                )
+                .build()
+            val resp = client.newCall(request).execute()
+            val s = resp.body!!.string()
+            val r = JSONObject(s)
+            resp.close()
             val array = r.getJSONArray("response")
             val result = ArrayList<UIStore>()
             for (i in 0 until array.length()) {
@@ -69,6 +78,7 @@ class StoresInteractor {
             }
             return result
         }
+
     }
 
     fun stop() {

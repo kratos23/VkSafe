@@ -4,11 +4,13 @@ import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import com.pavelkrylov.vsafe.App
 
-object DbHelper : SQLiteOpenHelper(App.instance, "db", null, 1) {
+object DbHelper : SQLiteOpenHelper(App.INSTANCE, "db", null, 1) {
     override fun onCreate(db: SQLiteDatabase) {
-        db.execSQL("""
+        db.execSQL(
+            """
             CREATE TABLE favorites (groupId int, productId int); 
-        """.trimIndent())
+        """.trimIndent()
+        )
     }
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {

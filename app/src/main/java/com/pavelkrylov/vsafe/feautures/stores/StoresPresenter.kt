@@ -1,6 +1,5 @@
 package com.pavelkrylov.vsafe.feautures.stores
 
-import android.os.Handler
 import com.pavelkrylov.vsafe.App
 import com.pavelkrylov.vsafe.base.BasePresenter
 import com.pavelkrylov.vsafe.base.Screens
@@ -13,6 +12,7 @@ class StoresPresenter(val vm: StoresVM) : BasePresenter() {
         interactor.endLd.observeForever {
             storesEnd = it
         }
+        onLoadMore()
     }
 
     fun onAttach(view: StoresFragment) {
@@ -28,27 +28,14 @@ class StoresPresenter(val vm: StoresVM) : BasePresenter() {
         interactor.stop()
     }
 
-    private var selectedCityVM: CityVM? = null
-
-
     var storesEnd = false
 
-    fun setSelectedCityVm(selectedCityVM: CityVM) {
-        if (this.selectedCityVM == null) {
-            selectedCityVM.selectedCity.observeForever {
-                interactor.updateCity(it.id)
-                storesEnd = false
-                vm.firstStoresLD.value = emptyList()
-                Handler().postDelayed({ onLoadMore() }, 300)
-            }
-        }
-        this.selectedCityVM = selectedCityVM
+    fun setQuery(query: String) {
+        interactor.updateQuery(query)
+        storesEnd = false
+        vm.firstStoresLD.value = emptyList()
+        onLoadMore()
     }
-
-    fun citySelectClicked() {
-        App.instance.cicerone.router.navigateTo(Screens.CitySelectScreen())
-    }
-
 
     fun onLoadMore() {
         if (storesEnd) {
@@ -59,12 +46,12 @@ class StoresPresenter(val vm: StoresVM) : BasePresenter() {
             vm.loadingLD.value = false
             val list = ArrayList<UIStore>(vm.firstStoresLD.value ?: emptyList())
             list.addAll(it)
-            vm.firstStoresLD.value = list
             vm.addStoresLD.value = it
+            vm.firstStoresLD.value = list
         }
     }
 
     fun storeClicked(store: UIStore) {
-        App.instance.getRouter().navigateTo(Screens.ProductsScreen(store.id, store.name))
+        App.INSTANCE.getRouter().navigateTo(Screens.ProductsScreen(store.id, store.name))
     }
 }

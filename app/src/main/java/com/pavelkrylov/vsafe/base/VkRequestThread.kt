@@ -11,18 +11,28 @@ class VkRequestThread<T>(val command: ApiCommand<T>, val ld: MutableLiveData<T>)
     }
 
     override fun run() {
-        var fail = false
-        do {
-            fail = false
-            try {
-                val result = VK.executeSync(command)
-                ld.postValue(result)
-            } catch (e: Exception) {
-                e.printStackTrace()
-                fail = true
-                sleep(500)
-            }
+        kotlin.runCatching {
+            var fail = false
+            do {
+                fail = false
+                try {
+                    val result = VK.executeSync(command)
+                    if (!isInterrupted) {
+                        ld.postValue(result)
+                    }
+                } catch (e: InterruptedException) {
+                    return@runCatching
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                    fail = true
+                    try {
+                        sleep(500)
+                    } catch (e: InterruptedException) {
+                        return@runCatching
+                    }
+                }
 
-        } while (fail && !isInterrupted);
+            } while (fail && !isInterrupted);
+        }
     }
 }

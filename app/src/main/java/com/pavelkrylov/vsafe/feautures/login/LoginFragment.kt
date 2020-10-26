@@ -8,15 +8,14 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.pavelkrylov.vsafe.App
-import com.pavelkrylov.vsafe.vkmarket.R
 import com.pavelkrylov.vsafe.base.Screens
+import com.pavelkrylov.vsafe.logic.network.VkTokenStorage
+import com.pavelkrylov.vsafe.vkmarket.R
 import com.vk.api.sdk.VK
 import com.vk.api.sdk.auth.VKAccessToken
 import com.vk.api.sdk.auth.VKAuthCallback
 import com.vk.api.sdk.auth.VKScope
-import com.vk.api.sdk.utils.VKUtils
 import kotlinx.android.synthetic.main.login_layout.*
-import java.util.*
 
 class LoginFragment : Fragment() {
 
@@ -37,7 +36,8 @@ class LoginFragment : Fragment() {
         super.onActivityResult(requestCode, resultCode, data)
         val callback = object : VKAuthCallback {
             override fun onLogin(token: VKAccessToken) {
-                App.instance.cicerone.router.replaceScreen(Screens.StoresScreen())
+                VkTokenStorage.saveToken(token.accessToken)
+                App.INSTANCE.cicerone.router.replaceScreen(Screens.StoresScreen())
             }
 
             override fun onLoginFailed(errorCode: Int) {

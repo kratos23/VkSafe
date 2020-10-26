@@ -1,14 +1,14 @@
 package com.pavelkrylov.vsafe.feautures.main
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import ru.terrakok.cicerone.android.support.SupportAppNavigator
-import android.content.Intent
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.pavelkrylov.vsafe.App
-import com.pavelkrylov.vsafe.vkmarket.R
 import com.pavelkrylov.vsafe.feautures.stores.city_select.CitySelectFragment
+import com.pavelkrylov.vsafe.vkmarket.R
+import ru.terrakok.cicerone.android.support.SupportAppNavigator
 import ru.terrakok.cicerone.commands.Command
 
 
@@ -40,13 +40,13 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
-        App.instance.getNavigatorHolder().setNavigator(navigator)
+        App.INSTANCE.getNavigatorHolder().setNavigator(navigator)
         presenter.onAttach()
     }
 
     override fun onPause() {
         super.onPause()
-        App.instance.getNavigatorHolder().removeNavigator()
+        App.INSTANCE.getNavigatorHolder().removeNavigator()
         presenter.onDetach()
     }
 

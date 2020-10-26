@@ -10,10 +10,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
 import androidx.recyclerview.widget.GridLayoutManager
 import com.pavelkrylov.vsafe.App
-import com.pavelkrylov.vsafe.vkmarket.R
 import com.pavelkrylov.vsafe.base.EndlessRecyclerViewScrollListener
+import com.pavelkrylov.vsafe.vkmarket.R
 import kotlinx.android.synthetic.main.products.*
-import kotlinx.android.synthetic.main.products.closeBtn
 
 class ProductsFragment : Fragment() {
     companion object {
@@ -105,7 +104,7 @@ class ProductsFragment : Fragment() {
         })
 
         closeBtn.setOnClickListener {
-            App.instance.getRouter().exit()
+            App.INSTANCE.getRouter().exit()
         }
     }
 }

@@ -11,26 +11,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#fff"
-        android:elevation="4dp">
-
-        <TextView
-            android:id="@+id/title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/roboto_medium"
-            android:text="Магазины в Санкт-Петербурге"
-            android:textColor="@android:color/black"
-            android:textSize="20sp" />
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:adjustViewBounds="false"
-            android:paddingLeft="4dp"
-            android:scaleType="fitXY"
-            android:src="@drawable/ic_dropdown_16"
-            android:tint="#3F8AE0" />
-    </androidx.appcompat.widget.Toolbar>
+        android:elevation="4dp"
+        app:title="@string/stores_title" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_marginTop="10dp"

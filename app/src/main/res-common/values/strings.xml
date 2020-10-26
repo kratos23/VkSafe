@@ -3,7 +3,7 @@
     <integer name="com_vk_sdk_AppId">7641262</integer>
     <string name="login">Войти</string>
     <string name="city">Город</string>
-    <string name="stores_title">Магазины в %s</string>
+    <string name="stores_title">Магазины</string>
     <string name="products_title">Товары сообщества %s</string>
     <string name="no_products">Здесь пока нет товаров</string>
     <string name="add_to_favorites">Добавить в избранное</string>

@@ -17,8 +17,8 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.pavelkrylov.vsafe.App
-import com.pavelkrylov.vsafe.vkmarket.R
 import com.pavelkrylov.vsafe.feautures.stores.CityVM
+import com.pavelkrylov.vsafe.vkmarket.R
 import kotlinx.android.synthetic.main.city_select.*
 import kotlin.math.roundToInt
 
@@ -59,7 +59,7 @@ class CitySelectFragment : DialogFragment() {
         toolBar.outlineProvider = TopBarOutlineProvider()
 
         closeBtn.setOnClickListener {
-            App.instance.getRouter().exit()
+            App.INSTANCE.getRouter().exit()
         }
     }
 

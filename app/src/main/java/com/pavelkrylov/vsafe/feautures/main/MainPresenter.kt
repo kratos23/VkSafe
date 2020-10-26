@@ -9,9 +9,9 @@ class MainPresenter : BasePresenter() {
     override fun onFirstAttach() {
         super.onFirstAttach()
         if (VK.isLoggedIn()) {
-            App.instance.cicerone.router.replaceScreen(Screens.StoresScreen())
+            App.INSTANCE.cicerone.router.replaceScreen(Screens.StoresScreen())
         } else {
-            App.instance.cicerone.router.replaceScreen(Screens.LoginScreen())
+            App.INSTANCE.cicerone.router.replaceScreen(Screens.LoginScreen())
         }
     }
 

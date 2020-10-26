@@ -40,7 +40,7 @@ class ProductsPresenter(val productsVM: ProductsVM) : BasePresenter() {
 
 
     fun productSelected(product: UIProduct) {
-        App.instance.getRouter().navigateTo(
+        App.INSTANCE.getRouter().navigateTo(
             Screens.ProductInfoScreen(
                 product.id,
                 productsVM.groupId, product.name

@@ -3,16 +3,16 @@ package com.pavelkrylov.vsafe.feautures.product_info
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
-import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.doOnLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
 import com.pavelkrylov.vsafe.App
-import com.pavelkrylov.vsafe.vkmarket.R
 import com.pavelkrylov.vsafe.logic.formatPrice
+import com.pavelkrylov.vsafe.vkmarket.R
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.product_info.*
 
@@ -66,24 +66,24 @@ class ProductInfoFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         productsTitle.text = productName
         dataGroup.visibility = View.GONE
-        model.productInfoLD.observe(viewLifecycleOwner) {
+        model.productInfoLD.observe(viewLifecycleOwner) { product ->
             favoriteContainer.visibility = View.VISIBLE
             dataGroup.visibility = View.VISIBLE
             progress.visibility = View.GONE
-            productNameText.text = it.name
-            price.text = formatPrice(it.price, it.priceCurrency)
-            description.text = it.description
+            productNameText.text = product.name
+            price.text = formatPrice(product.price, product.priceCurrency)
+            description.text = product.description
 
-            Handler().post {
+            productImage.doOnLayout {
                 Picasso.get()
-                    .load(it.photoUrl)
+                    .load(product.photoUrl)
                     .resize(productImage.width, productImage.height)
                     .centerCrop()
                     .into(productImage)
             }
         }
         closeBtn.setOnClickListener {
-            App.instance.getRouter().exit()
+            App.INSTANCE.getRouter().exit()
         }
 
         favoriteBtn.setOnClickListener {

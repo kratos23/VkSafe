@@ -23,6 +23,6 @@ class CitySelectPresenter(val citySelectVM: CitySelectVM) : BasePresenter() {
     fun citySelected(city: UICity) {
         selectedCityVM.selectedCity.value = city
         CityInteractor.saveCity(city)
-        App.instance.getRouter().exit()
+        App.INSTANCE.getRouter().exit()
     }
 }

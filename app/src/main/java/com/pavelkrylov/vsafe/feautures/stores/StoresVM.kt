@@ -9,4 +9,5 @@ class StoresVM : ViewModel() {
     val addStoresLD = MutableLiveData<List<UIStore>>()
 
     val presenter = StoresPresenter(this)
+    var query = ""
 }
