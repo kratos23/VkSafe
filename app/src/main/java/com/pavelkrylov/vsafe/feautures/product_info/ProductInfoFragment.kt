@@ -1,7 +1,5 @@
 package com.pavelkrylov.vsafe.feautures.product_info
 
-import android.content.res.ColorStateList
-import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -67,7 +65,7 @@ class ProductInfoFragment : Fragment() {
         productsTitle.text = productName
         dataGroup.visibility = View.GONE
         model.productInfoLD.observe(viewLifecycleOwner) { product ->
-            favoriteContainer.visibility = View.VISIBLE
+            cartContainer.visibility = View.VISIBLE
             dataGroup.visibility = View.VISIBLE
             progress.visibility = View.GONE
             productNameText.text = product.name
@@ -85,21 +83,26 @@ class ProductInfoFragment : Fragment() {
         closeBtn.setOnClickListener {
             App.INSTANCE.getRouter().exit()
         }
-
-        favoriteBtn.setOnClickListener {
-            model.presenter.favoriteBtnClicked()
+        addToCart.setOnClickListener {
+            model.presenter.addToCartClicked()
         }
+        model.cartCount.observe(viewLifecycleOwner, this::onCartCount)
+        cartPlusBtn.setOnClickListener { model.presenter.plusBtnClicked() }
+        cartMinusBtn.setOnClickListener { model.presenter.minusBtnClicked() }
+    }
 
-        model.addedToFavorite.observe(viewLifecycleOwner) {
-            if (it) {
-                favoriteBtn.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#EDEEF0"))
-                favoriteBtn.text = getString(R.string.remove_from_favorites)
-                favoriteBtn.setTextColor(Color.parseColor("#3F8AE0"))
-            } else {
-                favoriteBtn.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#4986CC"))
-                favoriteBtn.text = getString(R.string.add_to_favorites)
-                favoriteBtn.setTextColor(Color.parseColor("#FFFFFF"))
-            }
+    private fun onCartCount(cartCount: Int) {
+        if (cartCount == 0) {
+            addToCart.visibility = View.VISIBLE
+            goToCartBtn.visibility = View.GONE
+            cartMinusBtn.visibility = View.GONE
+            cartPlusBtn.visibility = View.GONE
+        } else {
+            addToCart.visibility = View.GONE
+            goToCartBtn.visibility = View.VISIBLE
+            cartMinusBtn.visibility = View.VISIBLE
+            cartPlusBtn.visibility = View.VISIBLE
         }
+        goToCartBtn.text = getString(R.string.cart_count, cartCount.toString())
     }
 }

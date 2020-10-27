@@ -2,9 +2,11 @@ package com.pavelkrylov.vsafe.feautures.product_info
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.pavelkrylov.vsafe.App
 import com.pavelkrylov.vsafe.base.VkRequestThread
 import com.pavelkrylov.vsafe.logic.FavoriteStorage
 import com.pavelkrylov.vsafe.logic.UICurrency
+import com.pavelkrylov.vsafe.logic.db.entities.DbProduct
 import com.pavelkrylov.vsafe.logic.getCurrencyShort
 import com.vk.api.sdk.requests.VKRequest
 import org.json.JSONObject
@@ -78,8 +80,12 @@ class ProductInfoInteractor(val productId: Long, val groupId: Long) {
                     }
                 }
             }
-            return UIProductInfo(id, description, photoURL, amount, currency, name,
-                FavoriteStorage.checkFavorite(groupId, productId))
+            val productsDao = App.INSTANCE.db.value.productsDao()
+            productsDao.save(DbProduct(id = id.toString(), productInfo.toString()))
+            return UIProductInfo(
+                id, description, photoURL, amount, currency, name,
+                FavoriteStorage.checkFavorite(groupId, productId)
+            )
         }
     }
 

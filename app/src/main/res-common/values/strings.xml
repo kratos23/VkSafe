@@ -9,5 +9,7 @@
     <string name="products_title">Товары сообщества %s</string>
     <string name="no_products">Здесь пока нет товаров</string>
     <string name="add_to_favorites">Добавить в избранное</string>
+    <string name="add_to_cart">Добавить в корзину</string>
     <string name="remove_from_favorites">Удалить из избранного</string>
+    <string name="cart_count">В корзине %s шт.</string>
 </resources>

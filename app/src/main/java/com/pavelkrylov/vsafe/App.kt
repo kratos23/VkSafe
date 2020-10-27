@@ -1,7 +1,9 @@
 package com.pavelkrylov.vsafe
 
 import android.app.Application
+import androidx.room.Room
 import com.pavelkrylov.vsafe.base.Screens
+import com.pavelkrylov.vsafe.logic.db.RoomDb
 import com.pavelkrylov.vsafe.logic.network.OkHttp
 import com.squareup.picasso.LruCache
 import com.squareup.picasso.Picasso
@@ -23,6 +25,12 @@ class App : Application() {
 
     val outerCicerone = Cicerone.create()
     val customerCicerone = Cicerone.create()
+    val db = lazy {
+        Room.databaseBuilder(
+            applicationContext,
+            RoomDb::class.java, "roomDb"
+        ).build()
+    }
 
     private fun onInvalidToken() {
         outerCicerone.router.replaceScreen(Screens.LoginScreen())

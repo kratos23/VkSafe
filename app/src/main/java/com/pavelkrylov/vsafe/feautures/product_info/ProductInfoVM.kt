@@ -10,7 +10,7 @@ class ProductInfoVMFactory(val groupId:Long, val productId : Long) : ViewModelPr
 
 class ProductInfoVM(val groupId:Long, val productId : Long) : ViewModel() {
     val productInfoLD = MutableLiveData<UIProductInfo>()
-    val addedToFavorite = MutableLiveData(false)
+    val cartCount = MutableLiveData<Int>()
 
     val presenter = ProductInfoPresenter(this)
 
