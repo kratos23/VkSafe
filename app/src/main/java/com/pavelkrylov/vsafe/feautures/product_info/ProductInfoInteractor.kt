@@ -5,9 +5,9 @@ import androidx.lifecycle.MutableLiveData
 import com.pavelkrylov.vsafe.base.VkRequestThread
 import com.pavelkrylov.vsafe.logic.FavoriteStorage
 import com.pavelkrylov.vsafe.logic.UICurrency
+import com.pavelkrylov.vsafe.logic.getCurrencyShort
 import com.vk.api.sdk.requests.VKRequest
 import org.json.JSONObject
-import java.util.*
 import kotlin.concurrent.thread
 
 class ProductInfoInteractor(val productId: Long, val groupId: Long) {
@@ -45,9 +45,6 @@ class ProductInfoInteractor(val productId: Long, val groupId: Long) {
             addParam("item_ids", "-${groupId}_$productId")
             addParam("extended", "1")
         }
-
-        private fun getCurrencyShort(code: String) =
-            Currency.getInstance(code)?.getSymbol(Locale.getDefault())
 
         override fun parse(r: JSONObject): UIProductInfo {
             val productInfo = r.getJSONObject("response").getJSONArray("items").getJSONObject(0)

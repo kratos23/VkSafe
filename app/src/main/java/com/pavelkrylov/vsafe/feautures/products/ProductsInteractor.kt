@@ -4,11 +4,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.pavelkrylov.vsafe.base.VkRequestThread
 import com.pavelkrylov.vsafe.logic.UICurrency
+import com.pavelkrylov.vsafe.logic.getCurrencyShort
 import com.squareup.picasso.Picasso
 import com.vk.api.sdk.requests.VKRequest
 import org.json.JSONObject
-import java.util.*
-import kotlin.collections.ArrayList
 
 class ProductsInteractor(val groupId: Long) {
 
@@ -41,7 +40,6 @@ class ProductsInteractor(val groupId: Long) {
         return result
     }
 
-    private fun getCurrencyShort(code: String) = Currency.getInstance(code)?.getSymbol(Locale.getDefault())
 
 
     inner class ProductsVkRequest(val groupId: Long, val page: Int) :

@@ -1,5 +1,7 @@
 package com.pavelkrylov.vsafe.logic
 
+import java.util.*
+
 
 data class UICurrency(val id: Int, val name: String, val sign: String?)
 
@@ -13,4 +15,9 @@ fun formatPrice(price: Long, currency: UICurrency): String {
         amountS += currency.name
     }
     return amountS
+}
+
+fun getCurrencyShort(code: String) = when (code.toUpperCase(Locale.getDefault())) {
+    "RUB" -> "₽"
+    else -> null
 }

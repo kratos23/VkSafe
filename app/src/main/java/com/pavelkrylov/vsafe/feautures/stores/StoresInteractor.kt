@@ -20,7 +20,6 @@ class StoresInteractor {
     val endLd = MutableLiveData<Boolean>(false)
 
     fun loadMoreStores(): LiveData<List<UIStore>>? {
-        println("loading $loading")
         if (loading) {
             return null
         }
