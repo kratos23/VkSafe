@@ -22,16 +22,19 @@ android {
             useProguard false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+        debug{
+            crunchPngs false
+        }
     }
     sourceSets {
         main {
             res.srcDirs = [
-                    'src/main/res-common',
                     'src/main/res-login',
                     'src/main/res-stores',
                     'src/main/res-city_select',
                     'src/main/res-products',
-                    'src/main/res-product_info'
+                    'src/main/res-product_info',
+                    'src/main/res-common'
             ]
         }
     }
