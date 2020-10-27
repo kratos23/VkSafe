@@ -1,8 +1,13 @@
 package com.pavelkrylov.vsafe.feautures.products
 
+import androidx.lifecycle.LifecycleCoroutineScope
 import com.pavelkrylov.vsafe.App
 import com.pavelkrylov.vsafe.base.BasePresenter
 import com.pavelkrylov.vsafe.base.Screens
+import com.pavelkrylov.vsafe.logic.CartStorage
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class ProductsPresenter(val productsVM: ProductsVM) : BasePresenter() {
     val interactor = ProductsInteractor(productsVM.groupId)
@@ -15,6 +20,19 @@ class ProductsPresenter(val productsVM: ProductsVM) : BasePresenter() {
             productsEnd = it
             if (it && productsVM.firstProductsLD.value?.isEmpty() == true) {
                 productsVM.showNoProductsLD.value = true
+            }
+        }
+    }
+
+    fun onViewCreated(scope: LifecycleCoroutineScope) {
+        scope.launch {
+            val cart = withContext(Dispatchers.IO) {
+                CartStorage.getCart(productsVM.groupId)
+            }
+            if (cart.isEmpty()) {
+                productsVM.cartPrice.value = null
+            } else {
+                productsVM.cartPrice.value = cart.getTotalPrice()
             }
         }
     }

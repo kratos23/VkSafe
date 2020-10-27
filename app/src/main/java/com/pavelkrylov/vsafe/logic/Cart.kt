@@ -19,9 +19,10 @@ data class Cart(val countMap: MutableMap<String, Int> = TreeMap()) {
         return true
     }
 
-    suspend fun getTotalPrice(): Long {
+    suspend fun getTotalPrice(): Pair<Long, UICurrency> {
         val currentMap = countMap.toImmutableMap()
         var totalPrice = 0L
+        var currency: UICurrency? = null
         currentMap.forEach { (productId, amount) ->
             val productJson = withContext(Dispatchers.IO) {
                 val productsDao = App.INSTANCE.db.value.productsDao()
@@ -29,8 +30,15 @@ data class Cart(val countMap: MutableMap<String, Int> = TreeMap()) {
             }
             val priceJson = productJson.getJSONObject("price")
             val priceMicros = priceJson.getLong("amount")
+            val currencyJson = priceJson.getJSONObject("currency")
+            val currencyId = currencyJson.getInt("id")
+            currency = UICurrency(
+                currencyId,
+                currencyJson.getString("name"),
+                getCurrencyShort(currencyJson.getString("name"))
+            )
             totalPrice += priceMicros * amount
         }
-        return totalPrice
+        return totalPrice to currency!!
     }
 }

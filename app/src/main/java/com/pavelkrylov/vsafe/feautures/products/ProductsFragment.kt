@@ -7,12 +7,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.observe
 import androidx.recyclerview.widget.GridLayoutManager
 import com.pavelkrylov.vsafe.App
 import com.pavelkrylov.vsafe.base.EndlessRecyclerViewScrollListener
+import com.pavelkrylov.vsafe.logic.UICurrency
 import com.pavelkrylov.vsafe.vkmarket.R
 import kotlinx.android.synthetic.main.products.*
+import kotlin.math.roundToLong
 
 class ProductsFragment : Fragment() {
     companion object {
@@ -58,10 +61,10 @@ class ProductsFragment : Fragment() {
         val lm = GridLayoutManager(context, 2).apply {
             spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
                 override fun getSpanSize(position: Int): Int {
-                    if (position == adapter.products.size) {
+                    if (position >= adapter.products.size) {
                         return 2
                     } else {
-                        return 1;
+                        return 1
                     }
                 }
 
@@ -106,5 +109,21 @@ class ProductsFragment : Fragment() {
         closeBtn.setOnClickListener {
             App.INSTANCE.getRouter().exit()
         }
+        model.presenter.onViewCreated(viewLifecycleOwner.lifecycleScope)
+
+        model.cartPrice.observe(viewLifecycleOwner, this::onCartPrice)
+    }
+
+    private fun onCartPrice(price: Pair<Long, UICurrency>?) {
+        if (price == null) {
+            cartContainer.visibility = View.GONE
+        } else {
+            cartContainer.visibility = View.VISIBLE
+            val (amount, currency) = price
+            val roundCnt = (amount.toDouble() / 100).roundToLong()
+            goToCartBtn.text =
+                getString(R.string.cart_price, "$roundCnt ${currency.sign ?: currency.name}")
+        }
+        adapter.setSpacer(price != null)
     }
 }

@@ -1,64 +1,104 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/container"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/productsToolbar"
-        android:background="#fff"
-        android:elevation="4dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:contentInsetStart="4dp">
-
-        <ImageView
-            android:id="@+id/closeBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="0dp"
-            android:padding="12dp"
-            android:src="@drawable/ic_back_outline_28"
-            android:tint="#3F8AE0" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            app:autoSizeMaxTextSize="20sp"
-            app:autoSizeStepGranularity="2sp"
-            app:autoSizeMinTextSize="12sp"
-            app:autoSizeTextType="uniform"
-            android:id="@+id/productsTitle"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:gravity="center_vertical"
-            android:fontFamily="@font/roboto_medium"
-            android:paddingLeft="12dp"
-            android:paddingRight="16dp"
-            android:text="@string/products_title"
-            android:textColor="@android:color/black"
-            android:textSize="20sp" />
-
-    </androidx.appcompat.widget.Toolbar>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/productsRecycler"
-        android:layout_marginTop="4dp"
+    <LinearLayout
+        android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:background="#fff"
-        tools:itemCount="14" />
+        android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/noProducts"
-        android:text="@string/no_products"
-        android:fontFamily="@font/roboto_regular"
-        android:textSize="20sp"
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/productsToolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#fff"
+            android:elevation="4dp"
+            app:contentInsetStart="4dp">
+
+            <ImageView
+                android:id="@+id/closeBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="0dp"
+                android:padding="12dp"
+                android:src="@drawable/ic_back_outline_28"
+                android:tint="#3F8AE0" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/productsTitle"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:fontFamily="@font/roboto_medium"
+                android:gravity="center_vertical"
+                android:paddingLeft="12dp"
+                android:paddingRight="16dp"
+                android:text="@string/products_title"
+                android:textColor="@android:color/black"
+                android:textSize="20sp"
+                app:autoSizeMaxTextSize="20sp"
+                app:autoSizeMinTextSize="12sp"
+                app:autoSizeStepGranularity="2sp"
+                app:autoSizeTextType="uniform" />
+
+        </androidx.appcompat.widget.Toolbar>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/productsRecycler"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="4dp"
+            android:background="#fff"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            tools:itemCount="14" />
+
+        <TextView
+            android:id="@+id/noProducts"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fontFamily="@font/roboto_regular"
+            android:gravity="center"
+            android:text="@string/no_products"
+            android:textColor="@android:color/black"
+            android:textSize="20sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/cartContainer"
         android:layout_width="match_parent"
-        android:gravity="center"
-        android:textColor="@android:color/black"
-        android:layout_height="match_parent" />
+        android:layout_height="76dp"
+        android:layout_gravity="bottom"
+        android:background="#F9F9F9"
+        android:elevation="12dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:outlineProvider="bounds"
+        android:paddingLeft="16dp"
+        android:paddingTop="12dp"
+        android:paddingRight="16dp"
+        android:paddingBottom="12dp"
+        android:visibility="invisible"
+        tools:visibility="visible">
 
-</LinearLayout>
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/goToCartBtn"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:backgroundTint="#4BB34B"
+            android:elevation="0dp"
+            android:fontFamily="@font/roboto_medium"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:letterSpacing="0.014"
+            android:textAllCaps="false"
+            android:textSize="18sp"
+            app:cornerRadius="8dp"
+            tools:text="В корзине 49₽" />
+
+    </LinearLayout>
+</FrameLayout>
+
