@@ -21,10 +21,11 @@ class App : Application() {
         const val PICASSO_DISK_CACHE_SIZE = 1024 * 1024 * 30
     }
 
-    lateinit var cicerone: Cicerone<Router>
+    val outerCicerone = Cicerone.create()
+    val customerCicerone = Cicerone.create()
 
     private fun onInvalidToken() {
-        cicerone.router.replaceScreen(Screens.LoginScreen())
+        outerCicerone.router.replaceScreen(Screens.LoginScreen())
     }
 
     override fun onCreate() {
@@ -35,7 +36,6 @@ class App : Application() {
                 .build()
         )
         INSTANCE = this
-        cicerone = Cicerone.create()
         val config = VKApiConfig(
             context = this,
             validationHandler = VKDefaultValidationHandler(this),
@@ -53,10 +53,10 @@ class App : Application() {
     }
 
     fun getNavigatorHolder(): NavigatorHolder {
-        return cicerone.navigatorHolder
+        return outerCicerone.navigatorHolder
     }
 
     fun getRouter(): Router {
-        return cicerone.router
+        return outerCicerone.router
     }
 }

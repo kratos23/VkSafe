@@ -1,0 +1,8 @@
+<resources>
+
+    <style name="AppTheme.BottomNavigationStyle" parent="Widget.MaterialComponents.BottomNavigationView">
+        <item name="colorPrimary">#2975CC</item>
+        <item name="colorOnPrimary">#99A2AD</item>
+        <item name="itemBackground">@android:color/transparent</item>
+    </style>
+</resources>

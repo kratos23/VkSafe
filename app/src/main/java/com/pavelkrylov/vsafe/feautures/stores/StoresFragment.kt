@@ -52,6 +52,19 @@ class StoresFragment : Fragment() {
         adapter.notifyItemRangeRemoved(0, sz)
     }
 
+    private val backCallback = object : OnBackPressedCallback(true) {
+        override fun handleOnBackPressed() {
+            if (searchView?.isIconified == false) {
+                searchView?.setQuery("", true)
+                searchView?.isIconified = true
+            } else {
+                isEnabled = false
+                activity?.onBackPressed()
+                isEnabled = true
+            }
+        }
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         (activity as? MainActivity)?.setSupportActionBar(toolBar)
@@ -77,18 +90,8 @@ class StoresFragment : Fragment() {
         model.loadingLD.observe(viewLifecycleOwner) {
             adapter.setLoading(it)
         }
-        requireActivity().onBackPressedDispatcher.addCallback(object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                if (searchView?.isIconified == false) {
-                    searchView?.setQuery("", true)
-                    searchView?.isIconified = true
-                } else {
-                    isEnabled = false
-                    activity?.onBackPressed()
-                }
-            }
-        })
-
+        backCallback.isEnabled = true
+        requireActivity().onBackPressedDispatcher.addCallback(backCallback)
         storesRecycler.addOnScrollListener(object : EndlessRecyclerViewScrollListener(lm) {
             override fun onLoadMore() {
                 Handler().post {
@@ -97,6 +100,7 @@ class StoresFragment : Fragment() {
             }
         })
     }
+
 
     var searchView: SearchView? = null
     private val searchListener = object : SearchView.OnQueryTextListener {
@@ -126,6 +130,7 @@ class StoresFragment : Fragment() {
         super.onDestroyView()
         searchView = null
         (activity as? MainActivity)?.setSupportActionBar(null)
+        backCallback.remove()
     }
 
     override fun onDestroy() {

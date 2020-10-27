@@ -4,6 +4,8 @@
     <string name="login">Войти</string>
     <string name="city">Город</string>
     <string name="stores_title">Магазины</string>
+    <string name="orders_title">Мои заказы</string>
+    <string name="orders_menu_title">Заказы</string>
     <string name="products_title">Товары сообщества %s</string>
     <string name="no_products">Здесь пока нет товаров</string>
     <string name="add_to_favorites">Добавить в избранное</string>

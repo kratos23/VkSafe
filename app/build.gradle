@@ -34,7 +34,9 @@ android {
                     'src/main/res-city_select',
                     'src/main/res-products',
                     'src/main/res-product_info',
-                    'src/main/res-common'
+                    'src/main/res-common',
+                    'src/main/res-orders',
+                    'src/main/res-customer'
             ]
         }
     }
@@ -65,7 +67,7 @@ dependencies {
 
     implementation 'com.squareup.picasso:picasso:2.71828'
 
-    implementation 'com.google.android.material:material:1.1.0'
+    implementation 'com.google.android.material:material:1.2.1'
 
     implementation "androidx.constraintlayout:constraintlayout:1.1.3"
     implementation "com.squareup.okhttp3:okhttp:4.9.0"

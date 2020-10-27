@@ -37,7 +37,7 @@ class LoginFragment : Fragment() {
         val callback = object : VKAuthCallback {
             override fun onLogin(token: VKAccessToken) {
                 VkTokenStorage.saveToken(token.accessToken)
-                App.INSTANCE.cicerone.router.replaceScreen(Screens.StoresScreen())
+                App.INSTANCE.outerCicerone.router.replaceScreen(Screens.StoresScreen())
             }
 
             override fun onLoginFailed(errorCode: Int) {

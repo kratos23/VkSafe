@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.pavelkrylov.vsafe.App
+import com.pavelkrylov.vsafe.feautures.customer.MainCustomerFragment
 import com.pavelkrylov.vsafe.feautures.stores.city_select.CitySelectFragment
 import com.pavelkrylov.vsafe.vkmarket.R
 import ru.terrakok.cicerone.android.support.SupportAppNavigator
@@ -32,6 +33,9 @@ class MainActivity : AppCompatActivity() {
                 nextFragment: Fragment?,
                 fragmentTransaction: FragmentTransaction
             ) {
+                if (nextFragment is MainCustomerFragment) {
+                    fragmentTransaction.setPrimaryNavigationFragment(nextFragment)
+                }
                 if (nextFragment is CitySelectFragment) {
                     fragmentTransaction.setCustomAnimations(
                         R.anim.slide_in_up,
