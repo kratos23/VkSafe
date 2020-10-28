@@ -50,7 +50,7 @@ object CartStorage {
         return withContext(Dispatchers.Main) {
             if (groupId !in cartByGroupId) {
                 val cart = withContext(Dispatchers.IO) {
-                        loadCartFromFile(groupId)
+                    loadCartFromFile(groupId)
                 }
                 cartByGroupId[groupId] = cart
                 cart
@@ -62,7 +62,9 @@ object CartStorage {
 
     @Suppress("NAME_SHADOWING")
     suspend fun setCount(groupId: Long, productId: String, count: Int) {
-        val mutex = groupCartsMutexes.getOrPut(groupId, { Mutex() })
+        val mutex = withContext(Dispatchers.Main) {
+            groupCartsMutexes.getOrPut(groupId, { Mutex() })
+        }
         mutex.withLock {
             val groupId = abs(groupId)
             val groupCart = getGroupCart(groupId)
@@ -74,7 +76,9 @@ object CartStorage {
     }
 
     suspend fun getCart(groupId: Long): Cart {
-        val mutex = groupCartsMutexes.getOrPut(groupId, { Mutex() })
+        val mutex = withContext(Dispatchers.Main) {
+            groupCartsMutexes.getOrPut(groupId, { Mutex() })
+        }
         return mutex.withLock {
             val groupCart = getGroupCart(groupId)
             groupCart.copy(countMap = TreeMap(groupCart.countMap))
