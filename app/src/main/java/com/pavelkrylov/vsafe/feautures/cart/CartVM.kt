@@ -111,7 +111,11 @@ class CartVM(val groupId: Long) : ViewModel() {
     }
 
     fun nextBtnClicked() {
-        TODO("update products info, if price changed alert user")
+
+    }
+
+    fun productClicked(productId: String, productName: String) {
+        router.navigateTo(Screens.ProductInfoScreen(productId.toLong(), groupId, productName))
     }
 
     fun returnToMarketBtnClicked() {

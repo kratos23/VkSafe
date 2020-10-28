@@ -166,6 +166,13 @@ class CartFragment : Fragment(R.layout.cart) {
         inner class SpacerHolder(v: View) : RecyclerView.ViewHolder(v)
         inner class CartItemHolder(v: View) : RecyclerView.ViewHolder(v) {
             init {
+                v.setOnClickListener {
+                    val pos = adapterPosition
+                    if (pos != RecyclerView.NO_POSITION) {
+                        val product = getItem(pos) as? UICartItem
+                        product?.let { vm.productClicked(product.id, product.productName) }
+                    }
+                }
                 v.cartMinusBtn.setOnClickListener {
                     val pos = adapterPosition
                     if (pos != RecyclerView.NO_POSITION) {
