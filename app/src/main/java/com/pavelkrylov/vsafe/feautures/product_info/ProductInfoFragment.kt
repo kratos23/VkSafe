@@ -62,6 +62,7 @@ class ProductInfoFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        model.presenter.onViewCreated()
         productsTitle.text = productName
         dataGroup.visibility = View.GONE
         model.productInfoLD.observe(viewLifecycleOwner) { product ->
@@ -83,22 +84,23 @@ class ProductInfoFragment : Fragment() {
         closeBtn.setOnClickListener {
             App.INSTANCE.getRouter().exit()
         }
-        addToCart.setOnClickListener {
+        nextBtn.setOnClickListener {
             model.presenter.addToCartClicked()
         }
         model.cartCount.observe(viewLifecycleOwner, this::onCartCount)
         cartPlusBtn.setOnClickListener { model.presenter.plusBtnClicked() }
         cartMinusBtn.setOnClickListener { model.presenter.minusBtnClicked() }
+        goToCartBtn.setOnClickListener { model.presenter.goToCartBtnClicked() }
     }
 
     private fun onCartCount(cartCount: Int) {
         if (cartCount == 0) {
-            addToCart.visibility = View.VISIBLE
+            nextBtn.visibility = View.VISIBLE
             goToCartBtn.visibility = View.GONE
             cartMinusBtn.visibility = View.GONE
             cartPlusBtn.visibility = View.GONE
         } else {
-            addToCart.visibility = View.GONE
+            nextBtn.visibility = View.GONE
             goToCartBtn.visibility = View.VISIBLE
             cartMinusBtn.visibility = View.VISIBLE
             cartPlusBtn.visibility = View.VISIBLE

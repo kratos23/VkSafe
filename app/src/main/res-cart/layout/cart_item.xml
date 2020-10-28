@@ -1,0 +1,94 @@
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingLeft="16dp"
+    android:paddingTop="8dp"
+    android:paddingRight="16dp"
+    android:paddingBottom="8dp">
+
+    <ImageView
+        android:id="@+id/photo"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/cartMinusBtn"
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginRight="8dp"
+        android:background="@drawable/cnt_btn_bg"
+        android:elevation="0dp"
+        android:scaleType="center"
+        android:src="@drawable/ic_remove_from_cart"
+        app:iconTint="#3F8AE0"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/cartPlusBtn"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/cartPlusBtn"
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="@drawable/cnt_btn_bg"
+        android:elevation="0dp"
+        android:scaleType="center"
+        android:src="@drawable/ic_add_to_cart"
+        app:iconTint="#3F8AE0"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <TextView
+        android:id="@+id/productName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="2dp"
+        android:ellipsize="end"
+        android:fontFamily="@font/roboto_regular"
+        android:lineSpacingExtra="19.2sp"
+        android:lineSpacingMultiplier="0"
+        android:textColor="#000"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@id/productPrice"
+        app:layout_constraintLeft_toRightOf="@id/photo"
+        app:layout_constraintRight_toLeftOf="@id/cartMinusBtn"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed"
+        tools:text="Sportswear      Windrunner" />
+
+    <TextView
+        android:id="@+id/productPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:fontFamily="@font/roboto_medium"
+        android:textColor="#000"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="@id/productName"
+        app:layout_constraintTop_toBottomOf="@id/productName"
+        tools:text="250 ₽" />
+
+    <TextView
+        android:id="@+id/cntTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:fontFamily="@font/roboto_medium"
+        android:textColor="@color/colorAccent"
+        android:textSize="14sp"
+        app:layout_constraintBaseline_toBaselineOf="@id/productPrice"
+        app:layout_constraintLeft_toRightOf="@id/productPrice"
+        tools:text="3 шт." />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

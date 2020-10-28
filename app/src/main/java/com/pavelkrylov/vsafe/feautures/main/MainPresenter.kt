@@ -3,15 +3,22 @@ package com.pavelkrylov.vsafe.feautures.main
 import com.pavelkrylov.vsafe.App
 import com.pavelkrylov.vsafe.base.BasePresenter
 import com.pavelkrylov.vsafe.base.Screens
+import com.pavelkrylov.vsafe.vkmarket.BuildConfig
 import com.vk.api.sdk.VK
 
 class MainPresenter : BasePresenter() {
+    private val router = App.INSTANCE.outerCicerone.router
+
     override fun onFirstAttach() {
         super.onFirstAttach()
         if (VK.isLoggedIn()) {
-            App.INSTANCE.outerCicerone.router.replaceScreen(Screens.MainCustomerScreen())
+            if (BuildConfig.DEBUG && false) {
+                router.replaceScreen(Screens.CartScreen(2611))
+            } else {
+                router.replaceScreen(Screens.MainCustomerScreen())
+            }
         } else {
-            App.INSTANCE.outerCicerone.router.replaceScreen(Screens.LoginScreen())
+            router.replaceScreen(Screens.LoginScreen())
         }
     }
 

@@ -112,6 +112,10 @@ class ProductsFragment : Fragment() {
         model.presenter.onViewCreated(viewLifecycleOwner.lifecycleScope)
 
         model.cartPrice.observe(viewLifecycleOwner, this::onCartPrice)
+
+        goToCartBtn.setOnClickListener {
+            model.presenter.goToCartBtnClicked()
+        }
     }
 
     private fun onCartPrice(price: Pair<Long, UICurrency>?) {

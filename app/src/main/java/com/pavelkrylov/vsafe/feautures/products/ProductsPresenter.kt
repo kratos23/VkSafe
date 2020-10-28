@@ -13,6 +13,7 @@ class ProductsPresenter(val productsVM: ProductsVM) : BasePresenter() {
     val interactor = ProductsInteractor(productsVM.groupId)
 
     var productsEnd = false
+    private val router = App.INSTANCE.getRouter()
 
     init {
         onLoadMore()
@@ -58,11 +59,10 @@ class ProductsPresenter(val productsVM: ProductsVM) : BasePresenter() {
 
 
     fun productSelected(product: UIProduct) {
-        App.INSTANCE.getRouter().navigateTo(
-            Screens.ProductInfoScreen(
-                product.id,
-                productsVM.groupId, product.name
-            )
-        )
+        router.navigateTo(Screens.ProductInfoScreen(product.id, productsVM.groupId, product.name))
+    }
+
+    fun goToCartBtnClicked() {
+        router.navigateTo(Screens.CartScreen(productsVM.groupId))
     }
 }

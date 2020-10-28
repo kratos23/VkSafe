@@ -2,7 +2,9 @@ package com.pavelkrylov.vsafe.feautures.product_info
 
 import androidx.lifecycle.Observer
 import androidx.lifecycle.viewModelScope
+import com.pavelkrylov.vsafe.App
 import com.pavelkrylov.vsafe.base.BasePresenter
+import com.pavelkrylov.vsafe.base.Screens
 import com.pavelkrylov.vsafe.logic.CartStorage
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -37,6 +39,15 @@ class ProductInfoPresenter(val vm: ProductInfoVM) : BasePresenter() {
         vm.cartCount.observeForever(cartCountObserver)
     }
 
+    fun onViewCreated() {
+        vm.viewModelScope.launch {
+            val cart = withContext(Dispatchers.IO) {
+                CartStorage.getCart(vm.groupId)
+            }
+            vm.cartCount.value = cart.countMap.getOrElse(vm.productId.toString(), { 0 })
+        }
+    }
+
     fun addToCartClicked() {
         vm.cartCount.value = 1
     }
@@ -47,6 +58,12 @@ class ProductInfoPresenter(val vm: ProductInfoVM) : BasePresenter() {
 
     fun minusBtnClicked() {
         vm.cartCount.value = vm.cartCount.value!! - 1
+    }
+
+    private val router = App.INSTANCE.outerCicerone.router
+
+    fun goToCartBtnClicked() {
+        router.navigateTo(Screens.CartScreen(vm.groupId))
     }
 
     fun onDestroy() {

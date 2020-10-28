@@ -10,7 +10,13 @@
     <string name="no_products">Здесь пока нет товаров</string>
     <string name="add_to_favorites">Добавить в избранное</string>
     <string name="add_to_cart">Добавить в корзину</string>
+    <string name="next">Далее %s</string>
     <string name="remove_from_favorites">Удалить из избранного</string>
     <string name="cart_count">В корзине %s шт.</string>
     <string name="cart_price">В корзине %s</string>
+    <string name="cart">Корзина</string>
+    <string name="empty_cart">Ваша корзина пуста</string>
+    <string name="return_to_store">Вернуться в магазин</string>
+    <string name="cart_cnt">%d шт.</string>
+    <string name="clear_cart">Очистить корзину</string>
 </resources>
