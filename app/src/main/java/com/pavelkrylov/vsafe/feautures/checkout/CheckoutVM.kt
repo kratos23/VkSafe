@@ -7,11 +7,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.pavelkrylov.vsafe.App
+import com.pavelkrylov.vsafe.base.Screens
 import com.pavelkrylov.vsafe.base.retry
 import com.pavelkrylov.vsafe.logic.CartStorage
 import com.pavelkrylov.vsafe.logic.UICurrency
 import com.pavelkrylov.vsafe.logic.network.OkHttp
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.encodeToString
@@ -83,6 +85,10 @@ class CheckoutVM(val groupId: Long) : ViewModel() {
                         val intent = Intent(Intent.ACTION_VIEW, Uri.parse(GROUP_MESSAGE_URL))
                         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
                         App.INSTANCE.startActivity(intent)
+
+                        delay(5000)
+                        App.INSTANCE.getRouter().backTo(Screens.MainCustomerScreen())
+                        App.INSTANCE.getRouter().navigateTo(Screens.CheckoutSuccessScreen())
                     }
                 }
                 orderCreating = false
