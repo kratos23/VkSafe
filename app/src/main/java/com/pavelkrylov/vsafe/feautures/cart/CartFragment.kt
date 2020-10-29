@@ -70,14 +70,14 @@ class CartFragment : Fragment(R.layout.cart) {
         } else {
             payContainer.visibility = View.VISIBLE
         }
-        nextBtn.text = getString(R.string.next, getCartPrice(state.cart))
+        payBtn.text = getString(R.string.next, getCartPrice(state.cart))
 
         if (state.nextLoading) {
             progress.visibility = View.VISIBLE
-            nextBtn.visibility = View.INVISIBLE
+            payBtn.visibility = View.INVISIBLE
         } else {
             progress.visibility = View.INVISIBLE
-            nextBtn.visibility = View.VISIBLE
+            payBtn.visibility = View.VISIBLE
         }
         val newList = state.cart?.plusElement(SpacerItem("spacer"))
         adapter.submitList(newList)
@@ -103,7 +103,7 @@ class CartFragment : Fragment(R.layout.cart) {
         cartRv.layoutManager = LinearLayoutManager(context)
         (cartRv.itemAnimator as? SimpleItemAnimator)?.supportsChangeAnimations = false
         returnToMarketBtn.setOnClickListener { vm.returnToMarketBtnClicked() }
-        nextBtn.setOnClickListener { vm.nextBtnClicked() }
+        payBtn.setOnClickListener { vm.nextBtnClicked() }
     }
 
     class Adapter(val vm: CartVM) : ListAdapter<CartItem, RecyclerView.ViewHolder>(DIFF_CALLBACK) {

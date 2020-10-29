@@ -84,7 +84,7 @@ class ProductInfoFragment : Fragment() {
         closeBtn.setOnClickListener {
             App.INSTANCE.getRouter().exit()
         }
-        nextBtn.setOnClickListener {
+        payBtn.setOnClickListener {
             model.presenter.addToCartClicked()
         }
         model.cartCount.observe(viewLifecycleOwner, this::onCartCount)
@@ -95,12 +95,12 @@ class ProductInfoFragment : Fragment() {
 
     private fun onCartCount(cartCount: Int) {
         if (cartCount == 0) {
-            nextBtn.visibility = View.VISIBLE
+            payBtn.visibility = View.VISIBLE
             goToCartBtn.visibility = View.GONE
             cartMinusBtn.visibility = View.GONE
             cartPlusBtn.visibility = View.GONE
         } else {
-            nextBtn.visibility = View.GONE
+            payBtn.visibility = View.GONE
             goToCartBtn.visibility = View.VISIBLE
             cartMinusBtn.visibility = View.VISIBLE
             cartPlusBtn.visibility = View.VISIBLE

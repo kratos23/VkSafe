@@ -36,6 +36,9 @@ class CheckoutFragment : Fragment(R.layout.checkout) {
         super.onViewCreated(view, savedInstanceState)
         vm.priceLD.observe(viewLifecycleOwner, this::onPrice)
         toolBar.setNavigationOnClickListener { App.INSTANCE.outerCicerone.router.exit() }
+        payBtn.setOnClickListener {
+            vm.payBtnCLicked(address.text.toString(), comment.text.toString())
+        }
     }
 
     private fun onPrice(price: Pair<Long, UICurrency>?) {

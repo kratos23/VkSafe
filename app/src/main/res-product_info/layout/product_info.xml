@@ -103,7 +103,7 @@
         tools:visibility="visible">
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/nextBtn"
+            android:id="@+id/payBtn"
             style="?android:attr/borderlessButtonStyle"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
