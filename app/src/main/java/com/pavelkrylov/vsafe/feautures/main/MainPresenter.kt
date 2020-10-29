@@ -13,7 +13,7 @@ class MainPresenter : BasePresenter() {
         super.onFirstAttach()
         if (VK.isLoggedIn()) {
             if (BuildConfig.DEBUG && false) {
-                router.replaceScreen(Screens.CartScreen(2611))
+                router.replaceScreen(Screens.CheckoutScreen(2611))
             } else {
                 router.replaceScreen(Screens.MainCustomerScreen())
             }

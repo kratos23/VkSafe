@@ -2,6 +2,7 @@ package com.pavelkrylov.vsafe.base
 
 import androidx.fragment.app.Fragment
 import com.pavelkrylov.vsafe.feautures.cart.CartFragment
+import com.pavelkrylov.vsafe.feautures.checkout.CheckoutFragment
 import com.pavelkrylov.vsafe.feautures.customer.MainCustomerFragment
 import com.pavelkrylov.vsafe.feautures.login.LoginFragment
 import com.pavelkrylov.vsafe.feautures.orders.CustomerOrdersFragment
@@ -42,23 +43,31 @@ class Screens {
     }
 
     class MainCustomerScreen() : SupportAppScreen() {
-        override fun getFragment(): Fragment? {
+        override fun getFragment(): Fragment {
             return MainCustomerFragment()
         }
     }
 
     class CustomerOrdersScreen(val fr: CustomerOrdersFragment = CustomerOrdersFragment()) :
         SupportAppScreen() {
-        override fun getFragment(): Fragment? {
+        override fun getFragment(): Fragment {
             return fr
         }
     }
 
     class CartScreen(val groupId: Long) : SupportAppScreen() {
-        override fun getFragment(): Fragment? {
+        override fun getFragment(): Fragment {
             return CartFragment.newInstance(groupId)
         }
 
         override fun getScreenKey() = "cart_$groupId"
+    }
+
+    class CheckoutScreen(val groupId: Long) : SupportAppScreen() {
+        override fun getScreenKey() = "checkout_$groupId"
+
+        override fun getFragment(): Fragment {
+            return CheckoutFragment.newInstance(groupId)
+        }
     }
 }

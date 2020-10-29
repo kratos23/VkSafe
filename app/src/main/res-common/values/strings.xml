@@ -19,4 +19,11 @@
     <string name="return_to_store">Вернуться в магазин</string>
     <string name="cart_cnt">%d шт.</string>
     <string name="clear_cart">Очистить корзину</string>
+    <string name="checkout_title">Оформление заказа</string>
+    <string name="pay_vk">Оплатить VK Pay</string>
+    <string name="address">Адрес</string>
+    <string name="address_hint">Введите адрес</string>
+    <string name="comment">Коментарий</string>
+    <string name="comment_hint">Введите коментарий</string>
+    <string name="total">Итого</string>
 </resources>

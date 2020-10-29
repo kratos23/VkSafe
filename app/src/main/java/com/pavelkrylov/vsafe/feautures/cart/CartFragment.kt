@@ -66,9 +66,9 @@ class CartFragment : Fragment(R.layout.cart) {
         clearMenuItem.isVisible = state.cart?.isNotEmpty() == true
 
         if (state.cart.isNullOrEmpty()) {
-            nextContainer.visibility = View.INVISIBLE
+            payContainer.visibility = View.INVISIBLE
         } else {
-            nextContainer.visibility = View.VISIBLE
+            payContainer.visibility = View.VISIBLE
         }
         nextBtn.text = getString(R.string.next, getCartPrice(state.cart))
 

@@ -111,7 +111,7 @@ class CartVM(val groupId: Long) : ViewModel() {
     }
 
     fun nextBtnClicked() {
-
+        router.navigateTo(Screens.CheckoutScreen(groupId))
     }
 
     fun productClicked(productId: String, productName: String) {
