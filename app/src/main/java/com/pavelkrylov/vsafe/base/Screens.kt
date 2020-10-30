@@ -6,6 +6,7 @@ import com.pavelkrylov.vsafe.feautures.checkout.CheckoutFragment
 import com.pavelkrylov.vsafe.feautures.checkout.CheckoutSuccessFragment
 import com.pavelkrylov.vsafe.feautures.customer.MainCustomerFragment
 import com.pavelkrylov.vsafe.feautures.login.LoginFragment
+import com.pavelkrylov.vsafe.feautures.order_details.OrderDetailsFragment
 import com.pavelkrylov.vsafe.feautures.orders.OrdersFragment
 import com.pavelkrylov.vsafe.feautures.product_info.ProductInfoFragment
 import com.pavelkrylov.vsafe.feautures.products.ProductsFragment
@@ -77,6 +78,13 @@ class Screens {
 
         override fun getFragment(): Fragment? {
             return CheckoutSuccessFragment()
+        }
+    }
+
+    class OrderDetailsScreen(val isCustomer: Boolean, val orderId: Long) : SupportAppScreen() {
+        override fun getScreenKey() = "orderDetails_${orderId}_$isCustomer"
+        override fun getFragment(): Fragment {
+            return OrderDetailsFragment.newInstance(isCustomer, orderId)
         }
     }
 }

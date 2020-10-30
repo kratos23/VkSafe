@@ -12,8 +12,8 @@ class MainPresenter : BasePresenter() {
     override fun onFirstAttach() {
         super.onFirstAttach()
         if (VK.isLoggedIn()) {
-            if (BuildConfig.DEBUG && false) {
-                router.replaceScreen(Screens.CheckoutScreen(2611))
+            if (BuildConfig.DEBUG) {
+                router.replaceScreen(Screens.OrderDetailsScreen(true, 5))
             } else {
                 router.replaceScreen(Screens.MainCustomerScreen())
             }

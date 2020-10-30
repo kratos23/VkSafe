@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.pavelkrylov.vsafe.feautures.stores.CircleTransform
 import com.pavelkrylov.vsafe.logic.OrderStatus
+import com.pavelkrylov.vsafe.logic.getStatusText
 import com.pavelkrylov.vsafe.logic.toOrderStatus
 import com.pavelkrylov.vsafe.vkmarket.R
 import com.squareup.picasso.Picasso
@@ -77,23 +78,7 @@ class OrdersFragment : Fragment(R.layout.orders) {
     class Adapter(val vm: OrdersVM) :
         ListAdapter<IOrderItem, RecyclerView.ViewHolder>(DIFF_CALLBACK) {
 
-        private val customerStatusText = mapOf(
-            OrderStatus.PAID to "Ожидает подтверждения",
-            OrderStatus.CREATED to "Ожидает оплаты",
-            OrderStatus.CONFIRMED to "В процессе",
-            OrderStatus.DISPUTE to "Открыт спор",
-            OrderStatus.CANCELED to "Отменён",
-            OrderStatus.CLOSED to "Завершён"
-        )
 
-        private val storeStatusText = mapOf(
-            OrderStatus.PAID to "Ожидает вашего подтверждения",
-            OrderStatus.CREATED to "Ожидает оплаты",
-            OrderStatus.CONFIRMED to "Ожидает подтвержения",
-            OrderStatus.DISPUTE to "Открыт спор",
-            OrderStatus.CANCELED to "Отменён",
-            OrderStatus.CLOSED to "Завершён"
-        )
 
         private val statusColor = mapOf(
             OrderStatus.PAID to Color.parseColor("#FFA000"),
@@ -104,14 +89,6 @@ class OrdersFragment : Fragment(R.layout.orders) {
             OrderStatus.CANCELED to Color.parseColor("#857250")
         )
 
-        private fun getStatusText(status: String): String {
-            val orderStatus = status.toOrderStatus()
-            return if (vm.isCustomer) {
-                customerStatusText[orderStatus]!!
-            } else {
-                storeStatusText[orderStatus]!!
-            }
-        }
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
             val inflater = LayoutInflater.from(parent.context)
@@ -137,7 +114,7 @@ class OrdersFragment : Fragment(R.layout.orders) {
                 v.orderId.text = v.context.getString(R.string.order_id_string, order.id)
                 v.groupName.text = order.displayName
                 v.priceTv.text = order.price
-                v.statusTv.text = getStatusText(order.status)
+                v.statusTv.text = getStatusText(order.status.toOrderStatus()!!, vm.isCustomer)
                 statusColor[order.status.toOrderStatus()]?.let { v.statusTv.setTextColor(it) }
                 Picasso.get()
                     .load(order.photoUrl)
