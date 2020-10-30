@@ -13,7 +13,7 @@ object OkHttp {
             .build()
     }
 
-    const val BASE_URL = "http://10.110.196.52:8080"
+    const val BASE_URL = "http://192.168.68.105:8080"
     const val MARKETS_URL = "$BASE_URL/markets"
     const val ORDERS_URL = "$BASE_URL/orders"
     const val NEW_ORDER_URL = "$ORDERS_URL/new"

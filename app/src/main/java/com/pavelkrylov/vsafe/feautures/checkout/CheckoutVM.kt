@@ -85,6 +85,7 @@ class CheckoutVM(val groupId: Long) : ViewModel() {
                         val intent = Intent(Intent.ACTION_VIEW, Uri.parse(GROUP_MESSAGE_URL))
                         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
                         App.INSTANCE.startActivity(intent)
+                        CartStorage.clearCart(groupId)
 
                         delay(5000)
                         App.INSTANCE.getRouter().backTo(Screens.MainCustomerScreen())

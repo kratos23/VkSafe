@@ -84,4 +84,14 @@ object CartStorage {
             groupCart.copy(countMap = TreeMap(groupCart.countMap))
         }
     }
+
+    suspend fun clearCart(groupId: Long) {
+        val mutex = withContext(Dispatchers.Main) {
+            groupCartsMutexes.getOrPut(groupId, { Mutex() })
+        }
+        mutex.withLock {
+            cartByGroupId.remove(groupId)
+            saveCartToFile(groupId)
+        }
+    }
 }
