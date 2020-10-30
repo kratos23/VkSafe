@@ -6,7 +6,7 @@ import com.pavelkrylov.vsafe.feautures.checkout.CheckoutFragment
 import com.pavelkrylov.vsafe.feautures.checkout.CheckoutSuccessFragment
 import com.pavelkrylov.vsafe.feautures.customer.MainCustomerFragment
 import com.pavelkrylov.vsafe.feautures.login.LoginFragment
-import com.pavelkrylov.vsafe.feautures.orders.CustomerOrdersFragment
+import com.pavelkrylov.vsafe.feautures.orders.OrdersFragment
 import com.pavelkrylov.vsafe.feautures.product_info.ProductInfoFragment
 import com.pavelkrylov.vsafe.feautures.products.ProductsFragment
 import com.pavelkrylov.vsafe.feautures.stores.StoresFragment
@@ -49,7 +49,7 @@ class Screens {
         }
     }
 
-    class CustomerOrdersScreen(val fr: CustomerOrdersFragment = CustomerOrdersFragment()) :
+    class CustomerOrdersScreen(val fr: OrdersFragment = OrdersFragment.newInstance(true)) :
         SupportAppScreen() {
         override fun getFragment(): Fragment {
             return fr

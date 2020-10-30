@@ -8,7 +8,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.pavelkrylov.vsafe.App
 import com.pavelkrylov.vsafe.base.Screens
 import com.pavelkrylov.vsafe.feautures.main.MainActivity
-import com.pavelkrylov.vsafe.feautures.orders.CustomerOrdersFragment
+import com.pavelkrylov.vsafe.feautures.orders.OrdersFragment
 import com.pavelkrylov.vsafe.feautures.stores.StoresFragment
 import com.pavelkrylov.vsafe.vkmarket.R
 import kotlinx.android.synthetic.main.main_customer.*
@@ -56,7 +56,7 @@ class MainCustomerFragment : Fragment(R.layout.main_customer) {
     private fun updateNavigationSelection() {
         val id = when (childFragmentManager.findFragmentById(R.id.customerContainer)) {
             is StoresFragment -> R.id.stores
-            is CustomerOrdersFragment -> R.id.orders
+            is OrdersFragment -> R.id.orders
             else -> null
         }
         requireNotNull(id)

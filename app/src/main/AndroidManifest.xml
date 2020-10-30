@@ -2,15 +2,17 @@
     package="com.pavelkrylov.vsafe.vkmarket">
 
     <application
+        android:name="com.pavelkrylov.vsafe.App"
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:usesCleartextTraffic="true"
-        android:name="com.pavelkrylov.vsafe.App"
-        android:theme="@style/AppTheme" >
-        <activity android:name="com.pavelkrylov.vsafe.feautures.main.MainActivity">
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true">
+        <activity
+            android:name="com.pavelkrylov.vsafe.feautures.main.MainActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

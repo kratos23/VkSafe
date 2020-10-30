@@ -28,4 +28,6 @@
     <string name="total">Итого</string>
     <string name="order_success">Заказ успешно создан и помещен в раздел "Мои заказы"</string>
     <string name="go_to_orders">К моим заказам</string>
+    <string name="orders_empty">Здесь будут ваши заказы</string>
+    <string name="order_id_string">Заказ #%d</string>
 </resources>

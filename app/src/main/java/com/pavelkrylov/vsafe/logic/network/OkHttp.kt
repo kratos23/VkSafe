@@ -15,6 +15,6 @@ object OkHttp {
 
     const val BASE_URL = "http://192.168.68.105:8080"
     const val MARKETS_URL = "$BASE_URL/markets"
-    const val ORDERS_URL = "$BASE_URL/orders"
-    const val NEW_ORDER_URL = "$ORDERS_URL/new"
+    const val NEW_ORDER_URL = "$BASE_URL/orders/new"
+    const val CUSTOMER_ORDERS_URL = "$BASE_URL/customer/orders"
 }
