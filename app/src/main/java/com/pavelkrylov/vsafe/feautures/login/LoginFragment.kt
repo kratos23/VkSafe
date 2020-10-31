@@ -51,7 +51,7 @@ class LoginFragment : Fragment() {
                 if (App.INSTANCE.getIsCustomer()) {
                     router.replaceScreen(Screens.MainCustomerScreen())
                 } else {
-                    router.replaceScreen(Screens.StoreOrdersScreen())
+                    router.replaceScreen(Screens.StoreSelectionScreen())
                 }
             }
 

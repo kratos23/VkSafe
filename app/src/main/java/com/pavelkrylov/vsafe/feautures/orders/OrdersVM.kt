@@ -74,7 +74,7 @@ class OrdersVM(val isCustomer: Boolean) : ViewModel() {
                 if (isCustomer) {
                     getCustomerOrders()
                 } else {
-                    TODO()
+                    listOf()
                 }
             }
             updating = false

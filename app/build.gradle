@@ -41,7 +41,8 @@ android {
                     'src/main/res-customer',
                     'src/main/res-cart',
                     'src/main/res-checkout',
-                    'src/main/res-order_details'
+                    'src/main/res-order_details',
+                    'src/main/res-store_selection'
             ]
         }
     }

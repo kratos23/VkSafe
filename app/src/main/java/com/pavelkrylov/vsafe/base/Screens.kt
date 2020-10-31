@@ -10,6 +10,7 @@ import com.pavelkrylov.vsafe.feautures.order_details.OrderDetailsFragment
 import com.pavelkrylov.vsafe.feautures.orders.OrdersFragment
 import com.pavelkrylov.vsafe.feautures.product_info.ProductInfoFragment
 import com.pavelkrylov.vsafe.feautures.products.ProductsFragment
+import com.pavelkrylov.vsafe.feautures.store_select.StoreSelectionFragment
 import com.pavelkrylov.vsafe.feautures.stores.StoresFragment
 import ru.terrakok.cicerone.android.support.SupportAppScreen
 
@@ -96,6 +97,12 @@ class Screens {
         override fun getScreenKey() = "orderDetails_${orderId}_$isCustomer"
         override fun getFragment(): Fragment {
             return OrderDetailsFragment.newInstance(isCustomer, orderId)
+        }
+    }
+
+    class StoreSelectionScreen() : SupportAppScreen() {
+        override fun getFragment(): Fragment {
+            return StoreSelectionFragment()
         }
     }
 }

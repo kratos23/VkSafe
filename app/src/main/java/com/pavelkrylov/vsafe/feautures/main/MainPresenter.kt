@@ -18,7 +18,11 @@ class MainPresenter : BasePresenter() {
                 if (App.INSTANCE.getIsCustomer()) {
                     router.replaceScreen(Screens.MainCustomerScreen())
                 } else {
-                    router.replaceScreen(Screens.StoreOrdersScreen())
+                    if (App.INSTANCE.isMarketSelected()) {
+                        router.replaceScreen(Screens.StoreOrdersScreen())
+                    } else {
+                        router.replaceScreen(Screens.StoreSelectionScreen())
+                    }
                 }
             }
         } else {

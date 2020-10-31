@@ -23,6 +23,7 @@ class App : Application() {
         lateinit var INSTANCE: App
         const val PICASSO_DISK_CACHE_SIZE = 1024 * 1024 * 30
         const val IS_CUSTOMER_KEY = "is_customer"
+        const val MARKET_SELECTED_KEY = "market_selected"
     }
 
     val outerCicerone = Cicerone.create()
@@ -43,6 +44,12 @@ class App : Application() {
     fun getIsCustomer(): Boolean {
         return getPrefs().getBoolean(IS_CUSTOMER_KEY, true)
     }
+
+    fun setMarketSelected(selected: Boolean) {
+        getPrefs().edit().putBoolean(MARKET_SELECTED_KEY, selected).apply()
+    }
+
+    fun isMarketSelected(): Boolean = getPrefs().getBoolean(MARKET_SELECTED_KEY, false)
 
     private fun onInvalidToken() {
         outerCicerone.router.replaceScreen(Screens.LoginScreen())

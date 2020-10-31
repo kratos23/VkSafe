@@ -44,4 +44,6 @@
     <string name="i_m_market">Продавец</string>
     <string name="i_m_buyer">Покупатель</string>
     <string name="enter_as">Войти как</string>
+    <string name="select_store">Выберите магазин</string>
+    <string name="select_store_description">Здесь отбражаются сообщества, с включенным магазином, в которых вы являетесь администратором.\nЕсли у вас таких пока нет, вы можете создать магазин через VK.</string>
 </resources>
