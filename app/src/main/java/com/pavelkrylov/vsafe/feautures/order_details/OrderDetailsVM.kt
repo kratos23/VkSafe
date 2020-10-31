@@ -154,6 +154,10 @@ class OrderDetailsVM(val isCustomer: Boolean, val orderId: Long) : ViewModel() {
         }
     }
 
+    fun btnPressed(btnId: String) {
+        //TODO
+    }
+
     var updating = false
 
     fun updateStatus() {

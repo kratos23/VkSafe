@@ -1,10 +1,12 @@
 package com.pavelkrylov.vsafe.feautures.order_details
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -187,10 +189,20 @@ class OrderDetailsFragment : Fragment(R.layout.order_details) {
 
         }
 
-        class ContactViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        inner class ContactViewHolder(view: View) : RecyclerView.ViewHolder(view) {
             init {
                 view.contactBlock.setOnClickListener {
-                    //TODO
+                    val pos = adapterPosition
+                    if (pos != RecyclerView.NO_POSITION) {
+                        val contact = getItem(pos) as? UIContactItem
+                        if (contact != null) {
+                            val intent = Intent(
+                                Intent.ACTION_VIEW,
+                                "https://vk.com/im?sel=${contact.msgToId}".toUri()
+                            )
+                            view.context.startActivity(intent)
+                        }
+                    }
                 }
             }
         }
