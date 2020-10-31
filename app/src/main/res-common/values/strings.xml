@@ -40,4 +40,8 @@
     <string name="cancel_order">Отменить заказ</string>
     <string name="confirm_order">Подтвердить</string>
     <string name="open_dispute">Открыть спор</string>
+
+    <string name="i_m_market">Продавец</string>
+    <string name="i_m_buyer">Покупатель</string>
+    <string name="enter_as">Войти как</string>
 </resources>

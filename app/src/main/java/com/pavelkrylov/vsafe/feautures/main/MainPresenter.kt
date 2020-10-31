@@ -15,7 +15,11 @@ class MainPresenter : BasePresenter() {
             if (BuildConfig.DEBUG && false) {
                 router.replaceScreen(Screens.OrderDetailsScreen(true, 11))
             } else {
-                router.replaceScreen(Screens.MainCustomerScreen())
+                if (App.INSTANCE.getIsCustomer()) {
+                    router.replaceScreen(Screens.MainCustomerScreen())
+                } else {
+                    router.replaceScreen(Screens.StoreOrdersScreen())
+                }
             }
         } else {
             router.replaceScreen(Screens.LoginScreen())

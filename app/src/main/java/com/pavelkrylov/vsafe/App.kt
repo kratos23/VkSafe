@@ -1,6 +1,7 @@
 package com.pavelkrylov.vsafe
 
 import android.app.Application
+import android.content.Context
 import androidx.room.Room
 import com.pavelkrylov.vsafe.base.Screens
 import com.pavelkrylov.vsafe.logic.db.RoomDb
@@ -21,6 +22,7 @@ class App : Application() {
     companion object {
         lateinit var INSTANCE: App
         const val PICASSO_DISK_CACHE_SIZE = 1024 * 1024 * 30
+        const val IS_CUSTOMER_KEY = "is_customer"
     }
 
     val outerCicerone = Cicerone.create()
@@ -30,6 +32,16 @@ class App : Application() {
             applicationContext,
             RoomDb::class.java, "roomDb"
         ).build()
+    }
+
+    private fun getPrefs() = getSharedPreferences("prefs", Context.MODE_PRIVATE)
+
+    fun setIsCustomer(isCustomer: Boolean) {
+        getPrefs().edit().putBoolean(IS_CUSTOMER_KEY, isCustomer).apply()
+    }
+
+    fun getIsCustomer(): Boolean {
+        return getPrefs().getBoolean(IS_CUSTOMER_KEY, true)
     }
 
     private fun onInvalidToken() {

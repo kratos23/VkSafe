@@ -26,18 +26,33 @@ class LoginFragment : Fragment() {
         return inflater.inflate(R.layout.login_layout, container, false)
     }
 
+    private fun loginToVk() {
+        VK.login(activity!!, listOf(VKScope.MARKET, VKScope.GROUPS, VKScope.OFFLINE))
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        loginBtn.setOnClickListener {
-            VK.login(activity!!, listOf(VKScope.MARKET, VKScope.GROUPS, VKScope.OFFLINE))
+        loginMarketBtn.setOnClickListener {
+            App.INSTANCE.setIsCustomer(false)
+            loginToVk()
+        }
+        loginCustomerBtn.setOnClickListener {
+            App.INSTANCE.setIsCustomer(true)
+            loginToVk()
         }
     }
+
+    val router = App.INSTANCE.outerCicerone.router
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         val callback = object : VKAuthCallback {
             override fun onLogin(token: VKAccessToken) {
                 VkTokenStorage.saveToken(token.accessToken)
-                App.INSTANCE.outerCicerone.router.replaceScreen(Screens.StoresScreen())
+                if (App.INSTANCE.getIsCustomer()) {
+                    router.replaceScreen(Screens.MainCustomerScreen())
+                } else {
+                    router.replaceScreen(Screens.StoreOrdersScreen())
+                }
             }
 
             override fun onLoginFailed(errorCode: Int) {

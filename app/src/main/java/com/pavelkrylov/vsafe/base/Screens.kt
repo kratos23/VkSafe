@@ -55,6 +55,17 @@ class Screens {
         override fun getFragment(): Fragment {
             return fr
         }
+
+        override fun getScreenKey() = "customerOrdersScreen"
+    }
+
+    class StoreOrdersScreen(val fr: OrdersFragment = OrdersFragment.newInstance(false)) :
+        SupportAppScreen() {
+        override fun getFragment(): Fragment {
+            return fr
+        }
+
+        override fun getScreenKey() = "storeOrdersScreen"
     }
 
     class CartScreen(val groupId: Long) : SupportAppScreen() {
