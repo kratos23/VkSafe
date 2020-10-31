@@ -46,12 +46,20 @@ class OrderDetailsVM(val isCustomer: Boolean, val orderId: Long) : ViewModel() {
         OrderStatus.CANCELED to """Заказ был отменён. В скором времени деньги будут возвращены на ваш VK Pay."""
     )
 
+    private val storeStatusDescription = mapOf(
+        OrderStatus.PAID to """Заказ ожидает вашего подтверждения. Если вы не подтвердите заказ, в течении 24 часов с момента оплаты заказа, мы будем вынуждены отменить заказ и вернуть покупателю деньги.""",
+        OrderStatus.CONFIRMED to """Вы подтвердили заказ. Как-только покупатель подтвердит получение, оплата поступит на ваш VK Pay. Если покупатель долго не подтверждает получение, вы можете открыть спор.""",
+        OrderStatus.DISPUTE to """По вашему заказу был открыт спор. В ближайшее время, наш сервис свяжется с вами для того, что бы разобраться в ситуации. Вы можете написать нам первым.""",
+        OrderStatus.CLOSED to """Заказ успешно доставлен. Деньги скоро поступят на ваш VK Pay.""",
+        OrderStatus.CANCELED to """Заказ был отменён. Деньги будут возвращены покупателю."""
+    )
+
 
     private fun getStatusDescription(status: OrderStatus): String {
         if (isCustomer) {
             return customerStatusDescription[status]!!
         } else {
-            return status.toString() // TODO
+            return storeStatusDescription[status] ?: status.toString()
         }
     }
 

@@ -36,6 +36,9 @@ class OrderDetailsFragment : Fragment(R.layout.order_details) {
         const val CUSTOMER_CANCEL_ORDER_BTN_ID = "cancel_order_btn_customer"
         const val OPEN_DISPUTE_CUSTOMER_BTN_ID = "open_dispute_customer"
         const val CONFIRM_ORDER_CUSTOMER_BTN_ID = "confirm_order_customer"
+        const val CANCEL_ORDER_ORDER_STORE_BTN_ID = "cancel_order_store"
+        const val CONFIRM_ORDER_STORE_BTN_ID = "confirm_order_store"
+        const val OPEN_DISPUTE_BTN_STORE_ID = "open_dispute_btn_store_id"
 
         fun newInstance(isCustomer: Boolean, orderId: Long): OrderDetailsFragment {
             val fragment = OrderDetailsFragment()
@@ -86,14 +89,20 @@ class OrderDetailsFragment : Fragment(R.layout.order_details) {
         val buttonsView: View? = if (isCustomer) {
             when (state.orderInfo?.orderStatus) {
                 OrderStatus.CREATED -> createdCustomerButtons()
-                OrderStatus.DISPUTE -> disputeCustomerButtons()
+                OrderStatus.DISPUTE -> disputeButtons()
                 OrderStatus.PAID -> paidCustomerButtons()
                 OrderStatus.CONFIRMED -> confirmedCustomerButtons()
                 null -> null
                 else -> null
             }
         } else {
-            null
+            when (state.orderInfo?.orderStatus) {
+                OrderStatus.PAID -> paidStoreButtons()
+                OrderStatus.CONFIRMED -> confirmedStoreButtons()
+                OrderStatus.DISPUTE -> disputeButtons()
+                null -> null
+                else -> null
+            }
         }
         buttonsContainer.visibility = if (buttonsView == null) {
             View.INVISIBLE
@@ -124,7 +133,7 @@ class OrderDetailsFragment : Fragment(R.layout.order_details) {
         }
     }
 
-    private fun disputeCustomerButtons(): View? {
+    private fun disputeButtons(): View? {
         return layoutInflater.inflate(
             R.layout.order_dispute_customer_buttons,
             buttonsContainer,
@@ -159,6 +168,33 @@ class OrderDetailsFragment : Fragment(R.layout.order_details) {
             }
             findViewById<View>(R.id.confirmOrderBtn).setOnClickListener {
                 vm.btnPressed(CONFIRM_ORDER_CUSTOMER_BTN_ID)
+            }
+        }
+    }
+
+    private fun paidStoreButtons(): View? {
+        return layoutInflater.inflate(
+            R.layout.order_paid_store_buttons,
+            buttonsContainer,
+            false
+        ).apply {
+            findViewById<View>(R.id.cancelBtn).setOnClickListener {
+                vm.btnPressed(CANCEL_ORDER_ORDER_STORE_BTN_ID)
+            }
+            findViewById<View>(R.id.confirmOrderBtn).setOnClickListener {
+                vm.btnPressed(CONFIRM_ORDER_STORE_BTN_ID)
+            }
+        }
+    }
+
+    private fun confirmedStoreButtons(): View? {
+        return layoutInflater.inflate(
+            R.layout.order_confirmed_store_buttons,
+            buttonsContainer,
+            false
+        ).apply {
+            findViewById<View>(R.id.disputeBtn).setOnClickListener {
+                vm.btnPressed(OPEN_DISPUTE_BTN_STORE_ID)
             }
         }
     }
