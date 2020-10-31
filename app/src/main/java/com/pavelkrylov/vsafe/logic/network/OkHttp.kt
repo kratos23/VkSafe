@@ -18,4 +18,5 @@ object OkHttp {
     const val NEW_ORDER_URL = "$BASE_URL/orders/new"
     const val CUSTOMER_ORDERS_URL = "$BASE_URL/customer/orders"
     const val ORDER_DETAILS_URL = "$BASE_URL/order"
+    const val ORDER_BUTTONS_URL = "$BASE_URL/order/status"
 }

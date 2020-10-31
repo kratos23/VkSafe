@@ -14,7 +14,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import okhttp3.HttpUrl.Companion.toHttpUrl
+import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.Request
+import okhttp3.RequestBody.Companion.toRequestBody
 import org.json.JSONArray
 import org.json.JSONObject
 import kotlin.math.roundToLong
@@ -154,8 +156,35 @@ class OrderDetailsVM(val isCustomer: Boolean, val orderId: Long) : ViewModel() {
         }
     }
 
+    var btnSending = false
+
+    @Suppress("BlockingMethodInNonBlockingContext")
     fun btnPressed(btnId: String) {
-        //TODO
+        if (btnSending) {
+            return
+        }
+        viewModelScope.launch {
+            btnSending = true
+            val oldStatus = state.value?.orderInfo?.orderStatus
+            state.value = state.value?.copy(orderInfo = null)
+            withContext(Dispatchers.IO) {
+                retry {
+                    val bodyJSON = JSONObject().apply {
+                        put("from", oldStatus.toString())
+                        put("orderId", orderId)
+                        put("btn", btnId)
+                    }.toString().toRequestBody("application/json".toMediaType())
+                    val req = Request.Builder()
+                        .url(OkHttp.ORDER_BUTTONS_URL)
+                        .post(bodyJSON)
+                        .build()
+
+                    OkHttp.client.newCall(req).execute().close()
+                }
+            }
+            btnSending = false
+            updateStatus()
+        }
     }
 
     var updating = false
