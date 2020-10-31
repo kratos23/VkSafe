@@ -33,4 +33,7 @@
     <string name="orders_empty">Здесь будут ваши заказы</string>
     <string name="order_id_string">Заказ #%d</string>
     <string name="status_string">Статус: %s</string>
+
+    <string name="address_string">Адресс\n%s</string>
+    <string name="comment_string">Комментарий\n%s</string>
 </resources>

@@ -19,6 +19,7 @@ import kotlinx.android.synthetic.main.order_details.*
 import kotlinx.android.synthetic.main.order_item_cart.view.*
 import kotlinx.android.synthetic.main.order_item_cart.view.photo
 import kotlinx.android.synthetic.main.order_item_contact.view.*
+import kotlinx.android.synthetic.main.order_item_footer.view.*
 import kotlinx.android.synthetic.main.order_item_status.view.*
 
 class OrderDetailsFragment : Fragment(R.layout.order_details) {
@@ -128,6 +129,19 @@ class OrderDetailsFragment : Fragment(R.layout.order_details) {
 
         private fun bindOrderFooter(footer: UIOrderFooter, holder: FooterViewHolder) {
             val v = holder.itemView
+            v.totalPrice.text = footer.totalPrice
+            v.addressTv.text = v.context.getString(R.string.address_string, footer.address)
+            v.commentTv.text = v.context.getString(R.string.comment_string, footer.comment)
+            v.addressTv.visibility = if (footer.address.isBlank()) {
+                View.GONE
+            } else {
+                View.VISIBLE
+            }
+            v.commentTv.visibility = if (footer.comment.isBlank()) {
+                View.GONE
+            } else {
+                View.VISIBLE
+            }
         }
 
         private fun bindContact(contact: UIContactItem, holder: ContactViewHolder) {
