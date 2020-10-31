@@ -4,6 +4,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import com.pavelkrylov.vsafe.App
+import com.pavelkrylov.vsafe.base.Screens
 import com.pavelkrylov.vsafe.base.retry
 import com.pavelkrylov.vsafe.logic.network.OkHttp
 import kotlinx.coroutines.Dispatchers
@@ -79,8 +81,10 @@ class OrdersVM(val isCustomer: Boolean) : ViewModel() {
         }
     }
 
-    fun orderClicked(orderId: Long) {
+    private val router = App.INSTANCE.outerCicerone.router
 
+    fun orderClicked(orderId: Long) {
+        router.navigateTo(Screens.OrderDetailsScreen(isCustomer, orderId))
     }
 
     fun onViewCreated() {

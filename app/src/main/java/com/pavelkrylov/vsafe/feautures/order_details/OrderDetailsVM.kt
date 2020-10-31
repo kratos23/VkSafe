@@ -27,17 +27,30 @@ class OrderDetailsVM(val isCustomer: Boolean, val orderId: Long) : ViewModel() {
     }
 
     private val bgStatusColor = mapOf(
-        OrderStatus.PAID to Color.parseColor("#FFA000"),
-        OrderStatus.CREATED to Color.parseColor("#6D7885"),
-        OrderStatus.CONFIRMED to Color.parseColor("#3F8AE0"),
-        OrderStatus.DISPUTE to Color.parseColor("#EB4250"),
-        OrderStatus.CLOSED to Color.parseColor("#4BB34B"),
-        OrderStatus.CANCELED to Color.parseColor("#857250")
+        OrderStatus.PAID to Color.parseColor("#5CFFA000"),
+        OrderStatus.CREATED to Color.parseColor("#5C6D7885"),
+        OrderStatus.CONFIRMED to Color.parseColor("#5C3F8AE0"),
+        OrderStatus.DISPUTE to Color.parseColor("#5CEB4250"),
+        OrderStatus.CLOSED to Color.parseColor("#5C4BB34B"),
+        OrderStatus.CANCELED to Color.parseColor("#5C857250")
+    )
+
+    private val customerStatusDescription = mapOf(
+        OrderStatus.PAID to """Заказ успешно оплачен и ожидает подтверждения от магазина. Если магазин не подтвердит заказ в течении 24 часов с момента оплаты, мы вернём вам деньги. Пока магазин не подтвердил заказ, вы можете отменить заказ.""",
+        OrderStatus.CREATED to """Заказ ожидает вашей оплаты. Оплата осуществляется через нашего чат-бота ВКонтакте. Перейти к боту можно при помощи кнопки внизу экрана.""",
+        OrderStatus.CONFIRMED to """Магазин подтвердил отправку заказа. После получения заказа, пожалуйста подтвердите получение кнопкой внизу экрана. Магазин получит деньги только после вашего подтверждения.""",
+        OrderStatus.DISPUTE to """По вашему заказу был открыт спор. В ближайшее время, наш сервис свяжется с вами для того, что бы разобраться в ситуации. Вы можете написать нам первым.""",
+        OrderStatus.CLOSED to """Заказ успешно доставлен.""",
+        OrderStatus.CANCELED to """Заказ был отменён. В скором времени деньги будут возвращены на ваш VK Pay."""
     )
 
 
     private fun getStatusDescription(status: OrderStatus): String {
-        return status.toString() // TODO
+        if (isCustomer) {
+            return customerStatusDescription[status]!!
+        } else {
+            return status.toString() // TODO
+        }
     }
 
     private fun buildList(json: JSONObject): List<IOrderDetailsItem> {
