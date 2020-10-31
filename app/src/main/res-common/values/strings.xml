@@ -36,4 +36,8 @@
 
     <string name="address_string">Адресс\n%s</string>
     <string name="comment_string">Комментарий\n%s</string>
+    <string name="write_us">Написать нам</string>
+    <string name="cancel_order">Отменить заказ</string>
+    <string name="confirm_order">Подтвердить</string>
+    <string name="open_dispute">Открыть спор</string>
 </resources>

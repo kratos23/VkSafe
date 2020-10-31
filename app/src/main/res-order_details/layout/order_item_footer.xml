@@ -7,7 +7,7 @@
     android:paddingLeft="16dp"
     android:paddingTop="32dp"
     android:paddingRight="16dp"
-    android:paddingBottom="84dp">
+    android:paddingBottom="104dp">
 
     <FrameLayout
         android:layout_width="match_parent"

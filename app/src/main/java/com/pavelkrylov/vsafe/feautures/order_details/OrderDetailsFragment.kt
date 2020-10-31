@@ -2,10 +2,13 @@ package com.pavelkrylov.vsafe.feautures.order_details
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
 import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DiffUtil
@@ -13,7 +16,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.pavelkrylov.vsafe.App
+import com.pavelkrylov.vsafe.feautures.checkout.CheckoutVM
 import com.pavelkrylov.vsafe.feautures.stores.CircleTransform
+import com.pavelkrylov.vsafe.logic.OrderStatus
 import com.pavelkrylov.vsafe.ui.RoundedCornersTransform
 import com.pavelkrylov.vsafe.vkmarket.R
 import com.squareup.picasso.Picasso
@@ -28,6 +33,9 @@ class OrderDetailsFragment : Fragment(R.layout.order_details) {
     companion object {
         private const val IS_CUSTOMER_KEY = "is_customer"
         private const val ORDER_ID_KEY = "order_id"
+        const val CUSTOMER_CANCEL_ORDER_BTN_ID = "cancel_order_btn_customer"
+        const val OPEN_DISPUTE_CUSTOMER_BTN_ID = "open_dispute_customer"
+        const val CONFIRM_ORDER_CUSTOMER_BTN_ID = "confirm_order_customer"
 
         fun newInstance(isCustomer: Boolean, orderId: Long): OrderDetailsFragment {
             val fragment = OrderDetailsFragment()
@@ -73,6 +81,92 @@ class OrderDetailsFragment : Fragment(R.layout.order_details) {
             orderDetailsRv.visibility = View.VISIBLE
             adapter.submitList(state.orderInfo.orderList)
         }
+
+        buttonsContainer.removeAllViews()
+        val buttonsView: View? = if (isCustomer) {
+            when (state.orderInfo?.orderStatus) {
+                OrderStatus.CREATED -> createdCustomerButtons()
+                OrderStatus.DISPUTE -> disputeCustomerButtons()
+                OrderStatus.PAID -> paidCustomerButtons()
+                OrderStatus.CONFIRMED -> confirmedCustomerButtons()
+                null -> null
+                else -> null
+            }
+        } else {
+            null
+        }
+        buttonsContainer.visibility = if (buttonsView == null) {
+            View.INVISIBLE
+        } else {
+            View.VISIBLE
+        }
+        if (buttonsView != null) {
+            buttonsContainer.addView(
+                buttonsView, FrameLayout.LayoutParams(
+                    FrameLayout.LayoutParams.MATCH_PARENT,
+                    FrameLayout.LayoutParams.MATCH_PARENT
+                ).apply {
+                    gravity = Gravity.CENTER
+                }
+            )
+        }
+    }
+
+    private fun createdCustomerButtons(): View? {
+        return layoutInflater.inflate(
+            R.layout.order_created_customer_buttons,
+            buttonsContainer,
+            false
+        ).apply {
+            findViewById<View>(R.id.payBtn).setOnClickListener {
+                openVkBot()
+            }
+        }
+    }
+
+    private fun disputeCustomerButtons(): View? {
+        return layoutInflater.inflate(
+            R.layout.order_dispute_customer_buttons,
+            buttonsContainer,
+            false
+        ).apply {
+            findViewById<View>(R.id.writeUsBtn).setOnClickListener {
+                openVkBot()
+            }
+        }
+    }
+
+    private fun paidCustomerButtons(): View? {
+        return layoutInflater.inflate(
+            R.layout.order_payed_customer_buttons,
+            buttonsContainer,
+            false
+        ).apply {
+            findViewById<View>(R.id.cancelBtn).setOnClickListener {
+                vm.btnPressed(CUSTOMER_CANCEL_ORDER_BTN_ID)
+            }
+        }
+    }
+
+    private fun confirmedCustomerButtons(): View? {
+        return layoutInflater.inflate(
+            R.layout.order_confirmed_customer_buttons,
+            buttonsContainer,
+            false
+        ).apply {
+            findViewById<View>(R.id.openDisputeBtn).setOnClickListener {
+                vm.btnPressed(OPEN_DISPUTE_CUSTOMER_BTN_ID)
+            }
+            findViewById<View>(R.id.confirmOrderBtn).setOnClickListener {
+                vm.btnPressed(CONFIRM_ORDER_CUSTOMER_BTN_ID)
+            }
+        }
+    }
+
+    private fun openVkBot() {
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(CheckoutVM.GROUP_MESSAGE_URL))
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        App.INSTANCE.startActivity(intent)
     }
 
     class Adapter(val vm: OrderDetailsVM) :
