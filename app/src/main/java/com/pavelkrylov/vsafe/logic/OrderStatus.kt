@@ -26,7 +26,7 @@ val customerStatusText = mapOf(
 val storeStatusText = mapOf(
     OrderStatus.PAID to "Ожидает вашего подтверждения",
     OrderStatus.CREATED to "Ожидает оплаты",
-    OrderStatus.CONFIRMED to "Ожидает подтвержения",
+    OrderStatus.CONFIRMED to "Ожидает подтвержения покупателем",
     OrderStatus.DISPUTE to "Открыт спор",
     OrderStatus.CANCELED to "Отменён",
     OrderStatus.CLOSED to "Завершён"

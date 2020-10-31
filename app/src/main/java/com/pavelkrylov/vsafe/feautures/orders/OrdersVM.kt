@@ -61,6 +61,46 @@ class OrdersVM(val isCustomer: Boolean) : ViewModel() {
         }
     }
 
+    private suspend fun getStoreOrders(): List<UIOrder> {
+        val client = OkHttp.client
+        val req = Request.Builder()
+            .url(OkHttp.MARKET_ORDERS_URL)
+            .get()
+            .build()
+        return retry {
+            val result = ArrayList<UIOrder>()
+            val resp = client.newCall(req).execute()
+            val json = JSONObject(resp.body!!.string())
+            val usersJSON = json.getJSONObject("groups").getJSONArray("response")
+            val usersMap = mutableMapOf<Long, JSONObject>()
+            for (i in 0 until usersJSON.length()) {
+                val userJSON = usersJSON.getJSONObject(i)
+                val groupId = userJSON.getLong("id")
+                usersMap[groupId] = userJSON
+            }
+            val ordersJson = json.getJSONArray("orders")
+            for (i in 0 until ordersJson.length()) {
+                val orderJSON = ordersJson.getJSONObject(i)
+                val priceS = String.format(
+                    Locale.getDefault(),
+                    "%d",
+                    (orderJSON.getLong("price").toDouble() / 100.0).roundToLong()
+                )
+                val userJSON = usersMap[orderJSON.getLong("clientId")]!!
+                val uiOrder = UIOrder(
+                    id = orderJSON.getLong("id"),
+                    displayName = userJSON.getString("first_name") + " " + userJSON.getString("last_name"),
+                    photoUrl = userJSON.getString("photo_200"),
+                    price = "$priceS ₽",
+                    status = orderJSON.getString("status")
+                )
+                result.add(uiOrder)
+            }
+            resp.close()
+            result
+        }
+    }
+
     private var updating = false
 
     private fun updateOrders() {
@@ -74,7 +114,7 @@ class OrdersVM(val isCustomer: Boolean) : ViewModel() {
                 if (isCustomer) {
                     getCustomerOrders()
                 } else {
-                    listOf()
+                    getStoreOrders()
                 }
             }
             updating = false
