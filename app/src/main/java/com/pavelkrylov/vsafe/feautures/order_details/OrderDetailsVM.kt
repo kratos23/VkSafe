@@ -65,7 +65,7 @@ class OrderDetailsVM(val isCustomer: Boolean, val orderId: Long) : ViewModel() {
         }
 
         fun contactSection(): UIContactItem {
-            if (isCustomer) {
+            if (!isCustomer) {
                 val userJSON =
                     JSONObject(json.getString("user")).getJSONArray("response").getJSONObject(0)
                 val displayName =
@@ -73,7 +73,7 @@ class OrderDetailsVM(val isCustomer: Boolean, val orderId: Long) : ViewModel() {
                 return UIContactItem(
                     displayName = displayName,
                     photoUrl = userJSON.getString("photo_200"),
-                    contactActionText = "Связаться с покупателем",
+                    contactActionText = "Покупатель",
                     msgToId = userJSON.getLong("id")
                 )
             } else {
@@ -82,7 +82,7 @@ class OrderDetailsVM(val isCustomer: Boolean, val orderId: Long) : ViewModel() {
                 return UIContactItem(
                     msgToId = -groupJSON.getLong("id"),
                     displayName = groupJSON.getString("name"),
-                    contactActionText = "Связаться с магазином",
+                    contactActionText = "Магазин",
                     photoUrl = groupJSON.getString("photo_200")
                 )
             }

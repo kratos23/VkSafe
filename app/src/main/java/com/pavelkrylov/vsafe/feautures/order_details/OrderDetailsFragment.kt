@@ -11,8 +11,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.pavelkrylov.vsafe.App
+import com.pavelkrylov.vsafe.feautures.stores.CircleTransform
+import com.pavelkrylov.vsafe.ui.RoundedCornersTransform
 import com.pavelkrylov.vsafe.vkmarket.R
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.order_details.*
+import kotlinx.android.synthetic.main.order_item_cart.view.*
+import kotlinx.android.synthetic.main.order_item_cart.view.photo
+import kotlinx.android.synthetic.main.order_item_contact.view.*
 import kotlinx.android.synthetic.main.order_item_status.view.*
 
 class OrderDetailsFragment : Fragment(R.layout.order_details) {
@@ -94,7 +100,7 @@ class OrderDetailsFragment : Fragment(R.layout.order_details) {
             return when (viewType) {
                 STATUS_ITEM_TYPE -> StatusViewHolder(inflate(R.layout.order_item_status))
                 CONTACT_ITEM_TYPE -> ContactViewHolder(inflate(R.layout.order_item_contact))
-                CART_ITEM_TYPE -> CartViewHolder(inflate(R.layout.cart_item))
+                CART_ITEM_TYPE -> CartViewHolder(inflate(R.layout.order_item_cart))
                 FOOTER_ITEM_TYPE -> FooterViewHolder(inflate(R.layout.order_item_footer))
                 else -> throw IllegalArgumentException()
             }
@@ -110,6 +116,14 @@ class OrderDetailsFragment : Fragment(R.layout.order_details) {
 
         private fun bindCart(cart: UICartItem, holder: CartViewHolder) {
             val v = holder.itemView
+            v.cntTv.text = v.context.getString(R.string.cart_cnt, cart.amount)
+            v.productName.text = cart.productName
+            v.productPrice.text = cart.price
+
+            Picasso.get()
+                .load(cart.photoUrl)
+                .transform(RoundedCornersTransform())
+                .into(v.photo)
         }
 
         private fun bindOrderFooter(footer: UIOrderFooter, holder: FooterViewHolder) {
@@ -118,6 +132,18 @@ class OrderDetailsFragment : Fragment(R.layout.order_details) {
 
         private fun bindContact(contact: UIContactItem, holder: ContactViewHolder) {
             val v = holder.itemView
+            v.contactName.text = contact.displayName
+            v.sectionLabel.text = contact.contactActionText
+            v.sectionLabel2.text = if (vm.isCustomer) {
+                v.context.getString(R.string.your_order)
+            } else {
+                v.context.getString(R.string.client_order)
+            }
+
+            Picasso.get()
+                .load(contact.photoUrl)
+                .transform(CircleTransform())
+                .into(v.photo)
         }
 
         override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
@@ -148,7 +174,11 @@ class OrderDetailsFragment : Fragment(R.layout.order_details) {
         }
 
         class ContactViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-
+            init {
+                view.contactBlock.setOnClickListener {
+                    //TODO
+                }
+            }
         }
 
         class CartViewHolder(view: View) : RecyclerView.ViewHolder(view) {

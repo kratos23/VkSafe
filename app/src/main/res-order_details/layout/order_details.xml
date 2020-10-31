@@ -35,7 +35,7 @@
     <FrameLayout
         android:id="@+id/buttonsContainer"
         android:layout_width="match_parent"
-        android:layout_height="84dp"
+        android:layout_height="64dp"
         android:layout_gravity="bottom"
         android:background="#F9F9F9"
         android:elevation="12dp"
